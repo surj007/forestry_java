@@ -12,7 +12,7 @@ public class TestService {
     @Autowired
     TestDao testDao;
 
-    public List<Test> getData(int id) {
-        return testDao.getData(id);
+    public List<Test> getData() {
+        return testDao.getData();
     }
 }

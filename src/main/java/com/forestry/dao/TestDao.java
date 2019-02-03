@@ -6,5 +6,5 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface TestDao {
-    List<Test> getData(@Param("id") int id);
+    List<Test> getData();
 }

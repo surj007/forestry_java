@@ -17,7 +17,7 @@ public class TestController {
     TestService testService;
 
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
-    public List<Test> getData(@RequestParam(name = "id", required = true) int id) {
-        return testService.getData(id);
+    public List<Test> getData() {
+        return testService.getData();
     }
 }
