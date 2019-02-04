@@ -17,7 +17,7 @@
     </resultMap>
 
     <select id="getRolesByUserId" resultType="com.forestry.bean.Role">
-        select role.* from user_role, role where user_role.rid = role.id and user_role.uid = #{id};
+        select role.* from user_role left join role on user_role.rid = role.id where user_role.uid = #{id};
     </select>
 
     <select id="loadUserByUsername" resultMap="lazyLoadRoles">
@@ -25,6 +25,6 @@
     </select>
 
     <insert id="regUser">
-        insert user set username=#{username}, password=#{password};
+        insert user set username=#{username}, password=#{password}, phone=#{phone};
     </insert>
 </mapper>

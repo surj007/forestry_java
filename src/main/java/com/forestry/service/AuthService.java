@@ -2,6 +2,7 @@ package com.forestry.service;
 
 import com.forestry.bean.User;
 import com.forestry.dao.AuthDao;
+import com.forestry.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuthService implements UserDetailsService {
     @Autowired
     AuthDao authDao;
+    @Autowired
+    RedisUtil redisUtil;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -27,14 +30,25 @@ public class AuthService implements UserDetailsService {
         return user;
     }
 
-    public int regUser(String username, String password) {
+    public int regUser(String username, String password, String phone) {
         if (authDao.loadUserByUsername(username) != null) {
             return -1;
         }
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String encode = encoder.encode(password);
+        String encodePwd = encoder.encode(password);
 
-        return authDao.regUser(username, encode);
+        return authDao.regUser(username, encodePwd, phone);
+    }
+
+    public int checkCode(String phone, String code) {
+        Object validCode = redisUtil.get(phone);
+        if(validCode == null) {
+            return 1;
+        }
+        else if(code.equals(validCode)) {
+            return 0;
+        }
+        return 2;
     }
 }
