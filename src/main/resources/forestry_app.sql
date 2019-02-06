@@ -9,9 +9,11 @@ create table test (
 
 create table user (
     id int unsigned not null primary key auto_increment,
-    username varchar(255) not null unique key,
+    username varchar(20) not null unique key,
     password varchar(255) not null,
-    phone varchar(20) not null unique key
+    code varchar(255),
+    status tinyint(1) unsigned not null default 0,
+    last_modify_time timestamp not null default current_timestamp ,
 ) engine = InnoDB default charset = utf8;
 
 create table role (
@@ -40,3 +42,12 @@ create table menu_role (
     mid int not null,
     rid int not null
 ) engine = InnoDB default charset = utf8;
+
+CREATE PROCEDURE delete_code()
+BEGIN
+UPDATE `user` SET `code` = NULL WHERE TIME_TO_SEC(TIMEDIFF(NOW(), last_modify_time)) > 300 AND `code` IS NOT NULL;
+END
+
+CREATE EVENT delete_code_event
+ON SCHEDULE EVERY 30 SECOND STARTS NOW() ON COMPLETION PRESERVE DO
+CALL delete_code()

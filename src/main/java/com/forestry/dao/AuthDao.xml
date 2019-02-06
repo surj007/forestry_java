@@ -5,7 +5,8 @@
         <id column="id" property="id"/>
         <result column="username" property="username"/>
         <result column="password" property="password"/>
-        <result column="phone" property="phone"/>
+        <result column="code" property="code"/>
+        <result column="status" property="status"/>
     </resultMap>
 
     <resultMap id="lazyLoadRoles" type="com.forestry.bean.User" extends="userMap">
@@ -25,6 +26,22 @@
     </select>
 
     <insert id="regUser">
-        insert user set username=#{username}, password=#{password}, phone=#{phone};
+        insert user set username=#{username}, password=#{password};
     </insert>
+
+    <update id="updateCode">
+        update user
+        <set>
+            code = #{code}
+        </set>
+        where username = #{username}
+    </update>
+
+    <update id="updateUser">
+        update user
+        <set>
+            password = #{password}
+        </set>
+        where username = #{username}
+    </update>
 </mapper>

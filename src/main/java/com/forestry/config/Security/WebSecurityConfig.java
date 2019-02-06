@@ -50,8 +50,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers(
             "/index.html",
             "/static/**",
-            "/auth/getCode",
-            "/auth/regUser"
+            "/auth/getCode4RegAndResetPwd",
+            "/auth/getCode4Login",
+            "/auth/regUser",
+            "/auth/forgetPwd"
         );
     }
 

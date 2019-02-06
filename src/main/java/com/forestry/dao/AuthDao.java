@@ -11,5 +11,9 @@ public interface AuthDao {
 
     List<Role> getRolesByUserId(int id);
 
-    int regUser(@Param("username") String username, @Param("password") String password, @Param("phone") String phone);
+    int regUser(@Param("username") String username, @Param("password") String password);
+
+    int updateCode(@Param("username") String username, @Param("code") String code);
+
+    int updateUser(@Param("username") String username, @Param("password") String password);
 }

@@ -20,29 +20,36 @@ public class AuthService implements UserDetailsService {
     RedisUtil redisUtil;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String usernameAndLoginType) throws UsernameNotFoundException {
+        String args[]  = usernameAndLoginType.split("&");
+        String username = args[0];
+        String loginType = args[1];
+
         User user = authDao.loadUserByUsername(username);
 
-        if (user == null) {
+        if(user == null) {
             throw new UsernameNotFoundException("用户名不存在");
         }
 
+        if(loginType.equals("code")) {
+            user.setPassword(user.getCode());
+        }
         return user;
     }
 
-    public int regUser(String username, String password, String phone) {
-        if (authDao.loadUserByUsername(username) != null) {
+    public int regUser(String username, String password) {
+        if(isReg(username)) {
             return -1;
         }
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String encodePwd = encoder.encode(password);
 
-        return authDao.regUser(username, encodePwd, phone);
+        return authDao.regUser(username, encodePwd);
     }
 
-    public int checkCode(String phone, String code) {
-        Object validCode = redisUtil.get(phone);
+    public int checkCode(String username, String code) {
+        Object validCode = redisUtil.get(username);
         if(validCode == null) {
             return 1;
         }
@@ -50,5 +57,30 @@ public class AuthService implements UserDetailsService {
             return 0;
         }
         return 2;
+    }
+
+    public int setCode4Login(String phone, String code) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String encodeCode = encoder.encode(code);
+
+        return authDao.updateCode(phone, encodeCode);
+    }
+
+    public int updateUser(String username, String password) {
+        if(!isReg(username)) {
+            return -1;
+        }
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String encodePwd = encoder.encode(password);
+
+        return authDao.updateUser(username, encodePwd);
+    }
+
+    public boolean isReg(String username) {
+        if(authDao.loadUserByUsername(username) != null) {
+            return true;
+        }
+        return false;
     }
 }

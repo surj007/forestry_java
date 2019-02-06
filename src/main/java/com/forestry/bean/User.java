@@ -7,14 +7,18 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 public class User implements UserDetails {
     private int id;
+    // phone
     private String username;
     private String password;
-    private String phone;
+    private String code;
+    private int status;
     private List<Role> roles;
+    private Date last_modify_time;
 
     @JsonIgnore
     @Override
@@ -37,7 +41,7 @@ public class User implements UserDetails {
     @JsonIgnore
     @Override
     public boolean isEnabled() {
-        return true;
+        return status == 1;
     }
 
     @JsonIgnore
@@ -77,12 +81,22 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public String getPhone() {
-        return phone;
+    @JsonIgnore
+    public String getCode() {
+        return code;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    @JsonIgnore
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public List<Role> getRoles() {
@@ -91,5 +105,14 @@ public class User implements UserDetails {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    @JsonIgnore
+    public Date getLast_modify_time() {
+        return last_modify_time;
+    }
+
+    public void setLast_modify_time(Date last_modify_time) {
+        this.last_modify_time = last_modify_time;
     }
 }
