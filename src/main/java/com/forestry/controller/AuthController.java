@@ -59,7 +59,7 @@ public class AuthController {
         }
 
         String code = CommonUtil.generateCode();
-
+System.out.println(code);
         int result = authService.setCode4Login(phone, code);
 
         if(result == 0) {
@@ -94,13 +94,17 @@ public class AuthController {
             return CommonResDto.error("短信验证码输入错误，请重新输入");
         }
 
-        int result = authService.regUser(reqMap.get("username").toString(), reqMap.get("password").toString());
+        int result4RegUser = authService.regUser(reqMap.get("username").toString(), reqMap.get("password").toString());
 
-        if(result == 1) {
-            return CommonResDto.ok("regUser success");
+        if(result4RegUser == 1) {
+            int result4AddRole = authService.addRole(reqMap.get("username").toString(), 1);
+
+            if(result4AddRole == 1) {
+                return CommonResDto.ok("regUser success");
+            }
         }
-        else if (result == -1) {
-            return CommonResDto.error("用户名已存在，请重新输入");
+        else if (result4RegUser == -1) {
+            return CommonResDto.error("手机号已存在，请重新输入或登陆");
         }
         return CommonResDto.error("regUser failed");
     }

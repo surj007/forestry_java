@@ -16,4 +16,6 @@ public interface AuthDao {
     int updateCode(@Param("username") String username, @Param("code") String code);
 
     int updateUser(@Param("username") String username, @Param("password") String password);
+
+    int addRole(@Param("uid") int uid, @Param("rid") int rid);
 }

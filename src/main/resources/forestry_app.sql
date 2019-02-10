@@ -12,7 +12,7 @@ create table user (
     username varchar(20) not null unique key,
     password varchar(255) not null,
     code varchar(255),
-    status tinyint(1) unsigned not null default 0,
+    status tinyint(1) unsigned not null default 1,
     last_modify_time timestamp not null default current_timestamp ,
 ) engine = InnoDB default charset = utf8;
 

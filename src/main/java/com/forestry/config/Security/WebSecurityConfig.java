@@ -94,7 +94,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         res.setContentType("application/json;charset=utf-8");
                         CommonResDto commonResDto = null;
                         if (e instanceof BadCredentialsException || e instanceof UsernameNotFoundException) {
-                            commonResDto = CommonResDto.error("用户名或密码错误");
+                            commonResDto = CommonResDto.error("手机号或密码错误");
                         }
                         else {
                             commonResDto = CommonResDto.error("login failed");

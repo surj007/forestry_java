@@ -83,4 +83,10 @@ public class AuthService implements UserDetailsService {
         }
         return false;
     }
+
+    public int addRole(String username, int roleId) {
+        User user = authDao.loadUserByUsername(username);
+
+        return authDao.addRole(user.getId(), roleId);
+    }
 }

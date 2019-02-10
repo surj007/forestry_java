@@ -44,4 +44,8 @@
         </set>
         where username = #{username}
     </update>
+
+    <insert id="addRole">
+        insert user_role set uid=#{uid}, rid=#{rid};
+    </insert>
 </mapper>
