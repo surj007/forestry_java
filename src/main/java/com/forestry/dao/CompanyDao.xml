@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.forestry.dao.CompanyDao">
+    <select id="getCompanyByUserId" resultType="com.forestry.bean.Company">
+      select company.* from company_user left join company on company_user.cid = company.id where company_user.uid = #{userId};
+    </select>
+
+    <insert id="addCompany" parameterType="com.forestry.bean.Company">
+        insert company (name, corporation, phone, address, store, companyType, source,
+                            outCityCompany, outCityCompanyName, kind, saw, sawOutput, other,
+                            otherOutput, product, saleArea, saleMount, remark, licencePic,
+                            cardFrontPic, cardOppositePic, notificationPic, commitPic)
+        values (#{company.name, jdbcType=VARCHAR}, #{company.corporation, jdbcType=VARCHAR},
+                #{company.phone, jdbcType=VARCHAR}, #{company.address, jdbcType=VARCHAR},
+                #{company.store, jdbcType=VARCHAR}, #{company.companyType, jdbcType=VARCHAR},
+                #{company.source, jdbcType=VARCHAR}, #{company.outCityCompany, jdbcType=TINYINT},
+                #{company.outCityCompanyName, jdbcType=VARCHAR}, #{company.kind, jdbcType=VARCHAR},
+                #{company.saw, jdbcType=VARCHAR}, #{company.sawOutput, jdbcType=VARCHAR},
+                #{company.other, jdbcType=VARCHAR}, #{company.otherOutput, jdbcType=VARCHAR},
+                #{company.product, jdbcType=VARCHAR}, #{company.saleArea, jdbcType=VARCHAR},
+                #{company.saleMount, jdbcType=VARCHAR}, #{company.remark, jdbcType=VARCHAR},
+                #{company.licencePic, jdbcType=VARCHAR}, #{company.cardFrontPic, jdbcType=VARCHAR},
+                #{company.cardOppositePic, jdbcType=VARCHAR}, #{company.notificationPic, jdbcType=VARCHAR},
+                #{company.commitPic, jdbcType=VARCHAR})
+    </insert>
+</mapper>

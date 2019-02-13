@@ -21,7 +21,7 @@ public class AuthService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String usernameAndLoginType) throws UsernameNotFoundException {
-        String args[]  = usernameAndLoginType.split("&");
+        String args[]  = usernameAndLoginType.split("-@_");
         String username = args[0];
         String loginType = args[1];
 

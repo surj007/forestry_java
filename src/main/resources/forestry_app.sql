@@ -24,23 +24,41 @@ create table role (
 
 create table user_role (
     id int unsigned not null primary key auto_increment,
-    uid int not null,
-    rid int not null
+    uid int unsigned not null,
+    rid int unsigned not null
 ) engine = InnoDB default charset = utf8;
 
-create table menu (
+create table company (
     id int unsigned not null primary key auto_increment,
-    path varchar(64),
-    component varchar(64),
-    name varchar(64),
-    icon varchar(64),
-    parentId int(11)
+    name varchar(50) not null unique key,
+    corporation varchar(20) not null,
+    phone varchar(20) not null,
+    address varchar(100) not null,
+    store varchar(200) not null,
+    companyType varchar(20) not null,
+    source varchar(50) not null,
+    outCityCompany tinyint(1) unsigned,
+    outCityCompanyName varchar(200),
+    kind varchar(200) not null,
+    saw varchar(20),
+    sawOutput varchar(20),
+    other varchar(20),
+    otherOutput varchar(20),
+    product varchar(100),
+    saleArea varchar(100),
+    saleMount varchar(20),
+    remark varchar(200),
+    licencePic varchar(1000) not null,
+    cardFrontPic varchar(1000) not null,
+    cardOppositePic varchar(1000) not null,
+    notificationPic varchar(1000) not null,
+    commitPic varchar(1000) not null
 ) engine = InnoDB default charset = utf8;
 
-create table menu_role (
+create table company_user (
     id int unsigned not null primary key auto_increment,
-    mid int not null,
-    rid int not null
+    uid int unsigned not null,
+    cid int unsigned not null
 ) engine = InnoDB default charset = utf8;
 
 CREATE PROCEDURE delete_code()
