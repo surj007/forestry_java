@@ -21,6 +21,7 @@
     </properties>
 
     <dependencies>
+        <!-- springboot web & test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -31,6 +32,7 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- mysql & mybatis -->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
@@ -46,6 +48,7 @@
             <version>1.1.10</version>
         </dependency>
 
+        <!-- redis -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
@@ -61,6 +64,7 @@
             <artifactId>jedis</artifactId>
         </dependency>
 
+        <!-- spring-security & spring-session -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
@@ -74,18 +78,20 @@
             <artifactId>spring-session-data-redis</artifactId>
         </dependency>
 
+        <!-- aop -->
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>5.2.4.Final</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
+        <!-- rpc -->
         <dependency>
             <groupId>org.apache.thrift</groupId>
             <artifactId>libthrift</artifactId>
             <version>0.11.0</version>
         </dependency>
 
+        <!-- aliyun -->
         <dependency>
             <groupId>com.aliyun</groupId>
             <artifactId>aliyun-java-sdk-core</artifactId>

@@ -1,29 +1,81 @@
 package com.forestry.bean;
 
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public class Company {
+    @NotNull
     private int id;
+
+    @NotBlank
     private String name;
+
+    @NotBlank
     private String corporation;
+
+    @NotBlank
     private String phone;
+
+    @NotBlank
     private String address;
+
+    @NotBlank
     private String store;
+
+    @NotBlank
     private String companyType;
+
+    @NotBlank
     private String source;
+
+    @NotNull
+    @Digits(integer = 1, fraction = 0)
     private int outCityCompany;
+
+    @NotBlank
     private String outCityCompanyName;
+
+    @NotBlank
     private String kind;
+
+    @NotNull
     private String saw;
+
+    @NotNull
     private String sawOutput;
+
+    @NotNull
     private String other;
+
+    @NotNull
     private String otherOutput;
+
+    @NotNull
     private String product;
+
+    @NotNull
     private String saleArea;
+
+    @NotNull
     private String saleMount;
+
+    @NotNull
     private String remark;
+
+    @NotBlank
     private String licencePic;
+
+    @NotBlank
     private String cardFrontPic;
+
+    @NotBlank
     private String cardOppositePic;
+
+    @NotBlank
     private String notificationPic;
+
+    @NotBlank
     private String commitPic;
 
     public int getId() {

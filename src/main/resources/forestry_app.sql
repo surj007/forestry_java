@@ -11,9 +11,10 @@ create table user (
     id int unsigned not null primary key auto_increment,
     username varchar(20) not null unique key,
     password varchar(255) not null,
+    name varchar(20),
     code varchar(255),
     status tinyint(1) unsigned not null default 1,
-    last_modify_time timestamp not null default current_timestamp ,
+    last_modify_time timestamp not null default current_timestamp
 ) engine = InnoDB default charset = utf8;
 
 create table role (
@@ -61,6 +62,7 @@ create table company_user (
     cid int unsigned not null
 ) engine = InnoDB default charset = utf8;
 
+-- 有错误，未在阿里云上执行
 CREATE PROCEDURE delete_code()
 BEGIN
 UPDATE `user` SET `code` = NULL WHERE TIME_TO_SEC(TIMEDIFF(NOW(), last_modify_time)) > 300 AND `code` IS NOT NULL;

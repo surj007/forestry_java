@@ -7,15 +7,15 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface AuthDao {
-    User loadUserByUsername(@Param("username") String username);
+    User loadUserByUsername(String username);
 
     List<Role> getRolesByUserId(int id);
 
-    int regUser(@Param("username") String username, @Param("password") String password);
+    int regUser(String username, String password);
 
-    int updateCode(@Param("username") String username, @Param("code") String code);
+    int updateCode(String username, String code);
 
-    int updateUser(@Param("username") String username, @Param("password") String password);
+    int updateUser(String username, String password);
 
-    int addRole(@Param("uid") int uid, @Param("rid") int rid);
+    int addRole(int uid, int rid);
 }

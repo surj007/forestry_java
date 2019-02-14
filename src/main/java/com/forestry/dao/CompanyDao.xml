@@ -6,21 +6,20 @@
     </select>
 
     <insert id="addCompany" parameterType="com.forestry.bean.Company">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            select LAST_INSERT_ID();
+        </selectKey>
         insert company (name, corporation, phone, address, store, companyType, source,
-                            outCityCompany, outCityCompanyName, kind, saw, sawOutput, other,
-                            otherOutput, product, saleArea, saleMount, remark, licencePic,
-                            cardFrontPic, cardOppositePic, notificationPic, commitPic)
-        values (#{company.name, jdbcType=VARCHAR}, #{company.corporation, jdbcType=VARCHAR},
-                #{company.phone, jdbcType=VARCHAR}, #{company.address, jdbcType=VARCHAR},
-                #{company.store, jdbcType=VARCHAR}, #{company.companyType, jdbcType=VARCHAR},
-                #{company.source, jdbcType=VARCHAR}, #{company.outCityCompany, jdbcType=TINYINT},
-                #{company.outCityCompanyName, jdbcType=VARCHAR}, #{company.kind, jdbcType=VARCHAR},
-                #{company.saw, jdbcType=VARCHAR}, #{company.sawOutput, jdbcType=VARCHAR},
-                #{company.other, jdbcType=VARCHAR}, #{company.otherOutput, jdbcType=VARCHAR},
-                #{company.product, jdbcType=VARCHAR}, #{company.saleArea, jdbcType=VARCHAR},
-                #{company.saleMount, jdbcType=VARCHAR}, #{company.remark, jdbcType=VARCHAR},
-                #{company.licencePic, jdbcType=VARCHAR}, #{company.cardFrontPic, jdbcType=VARCHAR},
-                #{company.cardOppositePic, jdbcType=VARCHAR}, #{company.notificationPic, jdbcType=VARCHAR},
-                #{company.commitPic, jdbcType=VARCHAR})
+                        outCityCompany, outCityCompanyName, kind, saw, sawOutput, other,
+                        otherOutput, product, saleArea, saleMount, remark, licencePic,
+                        cardFrontPic, cardOppositePic, notificationPic, commitPic)
+        values (#{name}, #{corporation}, #{phone}, #{address}, #{store}, #{companyType},
+                #{source}, #{outCityCompany}, #{outCityCompanyName}, #{kind}, #{saw}, #{sawOutput},
+                #{other}, #{otherOutput}, #{product}, #{saleArea}, #{saleMount}, #{remark},
+                #{licencePic}, #{cardFrontPic}, #{cardOppositePic}, #{notificationPic}, #{commitPic})
+    </insert>
+
+    <insert id="relatedCompanyAndUser">
+        insert company_user (uid, cid) values (#{uid}, #{cid})
     </insert>
 </mapper>

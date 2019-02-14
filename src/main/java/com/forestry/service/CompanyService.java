@@ -15,9 +15,12 @@ public class CompanyService {
         return companyDao.getCompanyByUserId(UserUtil.getUserInfo().getId());
     }
 
-    // TODO 关联user
     public int addCompany(Company company) {
         return companyDao.addCompany(company);
+    }
+
+    public int relatedCompanyAndUser(int companyId) {
+        return companyDao.relatedCompanyAndUser(UserUtil.getUserInfo().getId(), companyId);
     }
 
     public int updateCompany(Company company) {

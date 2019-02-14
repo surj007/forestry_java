@@ -1,12 +1,13 @@
 package com.forestry.dao;
 
 import com.forestry.bean.Company;
-import org.apache.ibatis.annotations.Param;
 
 public interface CompanyDao {
-    Company getCompanyByUserId(@Param("userId") int userId);
+    Company getCompanyByUserId(int userId);
 
-    int addCompany(@Param("company") Company company);
+    int addCompany(Company company);
 
-    int updateCompany(@Param("company") Company company);
+    int relatedCompanyAndUser(int uid, int cid);
+
+    int updateCompany(Company company);
 }

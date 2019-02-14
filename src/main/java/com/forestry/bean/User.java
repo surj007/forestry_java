@@ -15,6 +15,7 @@ public class User implements UserDetails {
     // phone
     private String username;
     private String password;
+    private String name;
     private String code;
     private int status;
     private List<Role> roles;
@@ -79,6 +80,14 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @JsonIgnore
