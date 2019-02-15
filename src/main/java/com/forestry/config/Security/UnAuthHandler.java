@@ -20,7 +20,7 @@ public class UnAuthHandler implements AuthenticationEntryPoint {
                          AuthenticationException e) throws IOException, ServletException {
         res.setContentType("application/json;charset=UTF-8");
         PrintWriter out = res.getWriter();
-        CommonResDto commonResDto = CommonResDto.error("未登录");
+        CommonResDto commonResDto = CommonResDto.error("请重新登录", e);
         out.write(new ObjectMapper().writeValueAsString(commonResDto));
         out.flush();
         out.close();

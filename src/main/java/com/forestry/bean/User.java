@@ -12,8 +12,7 @@ import java.util.List;
 
 public class User implements UserDetails {
     private int id;
-    // phone
-    private String username;
+    private String username; // phone
     private String password;
     private String name;
     private String code;

@@ -24,7 +24,7 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
             out.close();
         }
         catch(Exception ex) {
-            CommonUtil.Logger(this.getClass()).error(ex.toString());
+            CommonUtil.Logger(this.getClass()).error("global err: ", ex);
         }
 
         return null;

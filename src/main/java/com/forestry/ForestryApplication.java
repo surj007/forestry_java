@@ -2,6 +2,7 @@ package com.forestry;
 
 import com.forestry.rpc.TestRpcService;
 import com.forestry.rpc.impl.TestRpcServiceImpl;
+import com.forestry.util.CommonUtil;
 import org.apache.thrift.TProcessor;
 import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.server.TServer;
@@ -17,6 +18,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ForestryApplication {
     public static void main(String[] args) {
         SpringApplication.run(ForestryApplication.class, args);
+        System.out.println("http server listen 8089...");
         startRpcServer();
     }
 
@@ -32,6 +34,7 @@ public class ForestryApplication {
             server.serve();
         }
         catch(TTransportException e) {
+            CommonUtil.Logger(ForestryApplication.class).error("rpc err: ", e);
             e.printStackTrace();
         }
     }

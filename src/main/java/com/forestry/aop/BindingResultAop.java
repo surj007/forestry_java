@@ -26,7 +26,7 @@ public class BindingResultAop {
 
         if(bindingResult != null){
             if(bindingResult.hasErrors()){
-                return CommonResDto.error(bindingResult.getFieldError().getField() + bindingResult.getFieldError().getDefaultMessage());
+                return CommonResDto.error(bindingResult.getFieldError().getField() + " " + bindingResult.getFieldError().getDefaultMessage());
             }
         }
 

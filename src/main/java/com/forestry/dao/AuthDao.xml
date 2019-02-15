@@ -5,8 +5,10 @@
         <id column="id" property="id"/>
         <result column="username" property="username"/>
         <result column="password" property="password"/>
+        <result column="name" property="name"/>
         <result column="code" property="code"/>
         <result column="status" property="status"/>
+        <result column="last_modify_time" property="last_modify_time"/>
     </resultMap>
 
     <resultMap id="lazyLoadRoles" type="com.forestry.bean.User" extends="userMap">
@@ -18,19 +20,19 @@
     </resultMap>
 
     <select id="getRolesByUserId" resultType="com.forestry.bean.Role">
-        select role.* from user_role left join role on user_role.rid = role.id where user_role.uid = #{id};
+        select role_c.* from user_role_c left join role_c on user_role_c.rid = role_c.id where user_role_c.uid = #{id};
     </select>
 
     <select id="loadUserByUsername" resultMap="lazyLoadRoles">
-        select * from user where username=#{username};
+        select * from user_c where username=#{username};
     </select>
 
     <insert id="regUser">
-        insert user set username=#{username}, password=#{password};
+        insert user_c (username, password) values (#{username}, #{password});
     </insert>
 
     <update id="updateCode">
-        update user
+        update user_c
         <set>
             code = #{code}
         </set>
@@ -38,7 +40,7 @@
     </update>
 
     <update id="updateUser">
-        update user
+        update user_c
         <set>
             password = #{password}
         </set>
@@ -46,6 +48,6 @@
     </update>
 
     <insert id="addRole">
-        insert user_role set uid=#{uid}, rid=#{rid};
+        insert user_role_c (uid, rid) values (#{uid}, #{rid});
     </insert>
 </mapper>

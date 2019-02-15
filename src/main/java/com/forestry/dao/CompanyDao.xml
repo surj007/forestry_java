@@ -2,17 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.forestry.dao.CompanyDao">
     <select id="getCompanyByUserId" resultType="com.forestry.bean.Company">
-      select company.* from company_user left join company on company_user.cid = company.id where company_user.uid = #{userId};
+      select company_c.* from company_user_c left join company_c on company_user_c.cid = company_c.id where company_user_c.uid = #{userId};
     </select>
 
     <insert id="addCompany" parameterType="com.forestry.bean.Company">
         <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
             select LAST_INSERT_ID();
         </selectKey>
-        insert company (name, corporation, phone, address, store, companyType, source,
-                        outCityCompany, outCityCompanyName, kind, saw, sawOutput, other,
-                        otherOutput, product, saleArea, saleMount, remark, licencePic,
-                        cardFrontPic, cardOppositePic, notificationPic, commitPic)
+        insert company_c (name, corporation, phone, address, store, companyType, source,
+                          outCityCompany, outCityCompanyName, kind, saw, sawOutput, other,
+                          otherOutput, product, saleArea, saleMount, remark, licencePic,
+                          cardFrontPic, cardOppositePic, notificationPic, commitPic)
         values (#{name}, #{corporation}, #{phone}, #{address}, #{store}, #{companyType},
                 #{source}, #{outCityCompany}, #{outCityCompanyName}, #{kind}, #{saw}, #{sawOutput},
                 #{other}, #{otherOutput}, #{product}, #{saleArea}, #{saleMount}, #{remark},
@@ -20,6 +20,6 @@
     </insert>
 
     <insert id="relatedCompanyAndUser">
-        insert company_user (uid, cid) values (#{uid}, #{cid})
+        insert company_user_c (uid, cid) values (#{uid}, #{cid})
     </insert>
 </mapper>

@@ -26,6 +26,7 @@ public class AuthController {
         if(phone == null||
            type == null) {
             res.setStatus(400);
+
             return CommonResDto.error("缺少参数");
         }
 
@@ -43,6 +44,7 @@ public class AuthController {
                 return CommonResDto.ok("getCode4Reg success");
             }
             catch(Exception e) {
+                CommonUtil.Logger(this.getClass()).error("send sms err: ", e);
                 return CommonResDto.error("sendCode4Reg failed");
             }
         }
@@ -55,6 +57,7 @@ public class AuthController {
     public CommonResDto getCode4Login(HttpServletResponse res, String phone) {
         if(phone == null) {
             res.setStatus(400);
+
             return CommonResDto.error("缺少参数");
         }
 
@@ -71,6 +74,7 @@ System.out.println(code);
                 return CommonResDto.ok("getCode4Login success");
             }
             catch(Exception e) {
+                CommonUtil.Logger(this.getClass()).error("send sms err: ", e);
                 return CommonResDto.error("发送验证码失败，请稍后重试");
             }
         }
@@ -81,7 +85,8 @@ System.out.println(code);
         if(reqMap.get("username") == null ||
            reqMap.get("code") == null ||
            reqMap.get("password") == null) {
-            res.setStatus(404);
+            res.setStatus(400);
+
             return CommonResDto.error("缺少参数");
         }
 
@@ -106,6 +111,7 @@ System.out.println(code);
         else if (result4RegUser == -1) {
             return CommonResDto.error("手机号已存在，请重新输入或登陆");
         }
+
         return CommonResDto.error("regUser failed");
     }
 
@@ -115,6 +121,7 @@ System.out.println(code);
            reqMap.get("code") == null ||
            reqMap.get("password") == null) {
             res.setStatus(400);
+
             return CommonResDto.error("缺少参数");
         }
 
@@ -135,8 +142,7 @@ System.out.println(code);
         else if(result == 1) {
             return CommonResDto.ok("resetPwd success");
         }
-        else {
-            return CommonResDto.error("resetPwd failed");
-        }
+
+        return CommonResDto.error("resetPwd failed");
     }
 }

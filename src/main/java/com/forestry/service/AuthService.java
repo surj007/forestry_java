@@ -9,10 +9,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
 public class AuthService implements UserDetailsService {
     @Autowired
     AuthDao authDao;
@@ -34,6 +32,7 @@ public class AuthService implements UserDetailsService {
         if(loginType.equals("code")) {
             user.setPassword(user.getCode());
         }
+
         return user;
     }
 
@@ -50,12 +49,14 @@ public class AuthService implements UserDetailsService {
 
     public int checkCode(String username, String code) {
         Object validCode = redisUtil.get(username);
+
         if(validCode == null) {
             return 1;
         }
         else if(code.equals(validCode)) {
             return 0;
         }
+
         return 2;
     }
 
@@ -81,6 +82,7 @@ public class AuthService implements UserDetailsService {
         if(authDao.loadUserByUsername(username) != null) {
             return true;
         }
+
         return false;
     }
 
