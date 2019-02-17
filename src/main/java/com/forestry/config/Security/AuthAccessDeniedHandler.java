@@ -17,9 +17,10 @@ public class AuthAccessDeniedHandler implements AccessDeniedHandler {
     public void handle(HttpServletRequest req,
                        HttpServletResponse res,
                        AccessDeniedException e) throws IOException {
+        res.setStatus(403);
         res.setContentType("application/json;charset=UTF-8");
         PrintWriter out = res.getWriter();
-        CommonResDto commonResDto = CommonResDto.error("当前角色不能访问此资源");
+        CommonResDto commonResDto = CommonResDto.error("当前角色不能访问此资源", e);
         out.write(new ObjectMapper().writeValueAsString(commonResDto));
         out.flush();
         out.close();

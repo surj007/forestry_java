@@ -33,7 +33,7 @@ public class Company {
     @Digits(integer = 1, fraction = 0)
     private int outCityCompany;
 
-    @NotBlank
+    @NotNull
     private String outCityCompanyName;
 
     @NotBlank

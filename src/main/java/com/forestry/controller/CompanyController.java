@@ -4,6 +4,7 @@ import com.forestry.bean.Company;
 import com.forestry.dto.CommonResDto;
 import com.forestry.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,9 +22,11 @@ public class CompanyController {
     @RequestMapping(value = "/getCompany", method = RequestMethod.GET)
     public CommonResDto getCompany() {
         Company company = companyService.getCompanyByUserId();
+
         return CommonResDto.ok("getCompany success", company);
     }
 
+    @PreAuthorize("hasRole('ROLE_admin')")
     @RequestMapping(value = "/editCompany", method = RequestMethod.POST)
     public CommonResDto editCompany(@RequestBody @Valid Company company, BindingResult bindingResult) {
         if(company.getId() == 0) {
