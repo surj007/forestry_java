@@ -12,6 +12,9 @@ public class Company {
     private String name;
 
     @NotBlank
+    private String code;
+
+    @NotBlank
     private String corporation;
 
     @NotBlank
@@ -92,6 +95,14 @@ public class Company {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getCorporation() {

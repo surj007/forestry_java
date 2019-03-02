@@ -19,6 +19,10 @@ public class AuthService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String usernameAndLoginType) throws UsernameNotFoundException {
+        if(!usernameAndLoginType.contains("-@_")) {
+            throw new UsernameNotFoundException("用户名格式错误");
+        }
+
         String args[]  = usernameAndLoginType.split("-@_");
         String username = args[0];
         String loginType = args[1];

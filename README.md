@@ -1,5 +1,8 @@
 # forestry_java
 
+###TODO
+1、新建公司没有查重  
+
 ###上线需要修改
 1、执行sql  
 2、application.properties中数据库三个修改  
