@@ -14,8 +14,8 @@ public class CommonResDto {
         this.data = data;
     }
 
-    public static CommonResDto build() {
-        return new CommonResDto();
+    public static CommonResDto build(Integer code, String message, Object data) {
+        return new CommonResDto(code, message, data);
     }
 
     public static CommonResDto ok(String message, Object data) {
