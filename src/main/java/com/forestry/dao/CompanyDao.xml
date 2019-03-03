@@ -5,15 +5,19 @@
       select company_c.* from company_user_c left join company_c on company_user_c.cid = company_c.id where company_user_c.uid = #{userId};
     </select>
 
+    <select id="getCompanyByNameOrCode" resultType="com.forestry.bean.Company">
+        select * from company_c where name = #{name} or code = #{code};
+    </select>
+
     <insert id="addCompany" parameterType="com.forestry.bean.Company">
         <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
             select LAST_INSERT_ID();
         </selectKey>
-        insert company_c (name, corporation, phone, address, store, companyType, source,
+        insert company_c (name, corporation, phone, code, address, store, companyType, source,
                           outCityCompany, outCityCompanyName, kind, saw, sawOutput, other,
                           otherOutput, product, saleArea, saleMount, remark, licencePic,
                           cardFrontPic, cardOppositePic, notificationPic, commitPic)
-        values (#{name}, #{corporation}, #{phone}, #{address}, #{store}, #{companyType},
+        values (#{name}, #{corporation}, #{phone}, #{code}, #{address}, #{store}, #{companyType},
                 #{source}, #{outCityCompany}, #{outCityCompanyName}, #{kind}, #{saw}, #{sawOutput},
                 #{other}, #{otherOutput}, #{product}, #{saleArea}, #{saleMount}, #{remark},
                 #{licencePic}, #{cardFrontPic}, #{cardOppositePic}, #{notificationPic}, #{commitPic})

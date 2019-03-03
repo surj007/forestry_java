@@ -28,6 +28,7 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
             res.setContentType("application/json;charset=UTF-8");
             PrintWriter out = res.getWriter();
             CommonResDto commonResDto = CommonResDto.error("global err", e);
+            System.out.println(e);
             out.write(new ObjectMapper().writeValueAsString(commonResDto));
             out.flush();
             out.close();

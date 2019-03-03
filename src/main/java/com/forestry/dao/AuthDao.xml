@@ -24,7 +24,7 @@
     </select>
 
     <select id="loadUserByUsername" resultMap="lazyLoadRoles">
-        select * from user_c where username=#{username};
+        select * from user_c where username = #{username};
     </select>
 
     <insert id="regUser">

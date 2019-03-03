@@ -26,6 +26,10 @@ public class CompanyController {
     @PreAuthorize("hasRole('ROLE_admin')")
     @RequestMapping(value = "/editCompany", method = RequestMethod.POST)
     public CommonResDto editCompany(@RequestBody @Valid Company company, BindingResult bindingResult) {
+        if(companyService.getCompanyByNameOrCode(company.getName(), company.getCode()) != null) {
+            return CommonResDto.error("企业名称或信用代码已存在，请重新提交");
+        }
+
         if(company.getId() == 0) {
             if(companyService.addCompany(company) == 1) {
                 if(companyService.relatedCompanyAndUser(company.getId()) == 1) {

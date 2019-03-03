@@ -15,6 +15,10 @@ public class CompanyService {
         return companyDao.getCompanyByUserId(UserUtil.getUserInfo().getId());
     }
 
+    public Company getCompanyByNameOrCode(String name, String code) {
+        return companyDao.getCompanyByNameOrCode(name, code);
+    }
+
     public int addCompany(Company company) {
         return companyDao.addCompany(company);
     }
