@@ -8,6 +8,10 @@
         <result column="name" property="name"/>
         <result column="code" property="code"/>
         <result column="status" property="status"/>
+        <result column="boss" property="boss"/>
+        <result column="socialSecurityPic" property="socialSecurityPic"/>
+        <result column="cardFrontPic" property="cardFrontPic"/>
+        <result column="cardOppositePic" property="cardOppositePic"/>
         <result column="last_modify_time" property="last_modify_time"/>
     </resultMap>
 

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.forestry.dao.EmployeeDao">
+    <select id="getEmployee" resultType="com.forestry.bean.User">
+        select b.* from user_c as a left join user_c as b on a.id = b.boss where a.id = #{userId};
+    </select>
+
+    <select id="getEmployeeByNameOrUsername" resultType="com.forestry.bean.User">
+        select * from user_c where boss is not null and (name = #{name} or username = #{username});
+    </select>
+
+    <insert id="addEmployee" parameterType="com.forestry.bean.User">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            select LAST_INSERT_ID();
+        </selectKey>
+        insert user_c (username, name, boss, socialSecurityPic, cardFrontPic, cardOppositePic)
+        values (#{username}, #{name}, #{boss}, #{socialSecurityPic}, #{cardFrontPic}, #{cardOppositePic});
+    </insert>
+
+    <insert id="relatedCompanyAndEmployee">
+        insert company_user_c (uid, cid) select #{uid}, cid from company_user_c where uid = #{userId};
+    </insert>
+</mapper>

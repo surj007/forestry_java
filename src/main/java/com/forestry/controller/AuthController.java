@@ -81,7 +81,7 @@ System.out.println(code);
     }
 
     @RequestMapping(value = "/regUser", method = RequestMethod.POST)
-    public CommonResDto regUser(HttpServletResponse res, @RequestBody Map<String,Object> reqMap) {
+    public CommonResDto regUser(HttpServletResponse res, @RequestBody Map<String, Object> reqMap) {
         if(reqMap.get("username") == null ||
            reqMap.get("code") == null ||
            reqMap.get("password") == null) {

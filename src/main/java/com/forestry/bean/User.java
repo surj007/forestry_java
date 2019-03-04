@@ -17,6 +17,10 @@ public class User implements UserDetails {
     private String name;
     private String code;
     private int status;
+    private int boss;
+    private String socialSecurityPic;
+    private String cardFrontPic;
+    private String cardOppositePic;
     private List<Role> roles;
     private Date last_modify_time;
 
@@ -87,6 +91,38 @@ public class User implements UserDetails {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getBoss() {
+        return boss;
+    }
+
+    public void setBoss(int boss) {
+        this.boss = boss;
+    }
+
+    public String getSocialSecurityPic() {
+        return socialSecurityPic;
+    }
+
+    public void setSocialSecurityPic(String socialSecurityPic) {
+        this.socialSecurityPic = socialSecurityPic;
+    }
+
+    public String getCardFrontPic() {
+        return cardFrontPic;
+    }
+
+    public void setCardFrontPic(String cardFrontPic) {
+        this.cardFrontPic = cardFrontPic;
+    }
+
+    public String getCardOppositePic() {
+        return cardOppositePic;
+    }
+
+    public void setCardOppositePic(String cardOppositePic) {
+        this.cardOppositePic = cardOppositePic;
     }
 
     @JsonIgnore

@@ -32,5 +32,7 @@ public class TestController {
        2、类型为x-www-form-urlencoded时，直接用bean接收，(User user) user.getUserName()，可以使用@Validated
        3、类型为json时，需要加@RequestBody，(@RequestBody User user)，可以使用@Validated
        4、类型为json时，不定义实体类，(@RequestBody Map<String,Object> reqMap)，自己校验？
+       5、发送过来的数据中含有对象数组时，可以重新定义实体类，在实体类中添加list。
+       或者使用fastjson转换一下，先转换成jsonsrray，再转换成arraylist。
     */
 }

@@ -20,7 +20,7 @@
         values (#{name}, #{corporation}, #{phone}, #{code}, #{address}, #{store}, #{companyType},
                 #{source}, #{outCityCompany}, #{outCityCompanyName}, #{kind}, #{saw}, #{sawOutput},
                 #{other}, #{otherOutput}, #{product}, #{saleArea}, #{saleMount}, #{remark},
-                #{licencePic}, #{cardFrontPic}, #{cardOppositePic}, #{notificationPic}, #{commitPic})
+                #{licencePic}, #{cardFrontPic}, #{cardOppositePic}, #{notificationPic}, #{commitPic});
     </insert>
 
     <insert id="relatedCompanyAndUser">
