@@ -102,7 +102,8 @@ System.out.println(code);
         int result4RegUser = authService.regUser(reqMap.get("username").toString(), reqMap.get("password").toString());
 
         if(result4RegUser == 1) {
-            int result4AddRole = authService.addRole(reqMap.get("username").toString(), 1);
+            int adminRoleId = 1;
+            int result4AddRole = authService.addRole(reqMap.get("username").toString(), adminRoleId);
 
             if(result4AddRole == 1) {
                 return CommonResDto.ok("regUser success");

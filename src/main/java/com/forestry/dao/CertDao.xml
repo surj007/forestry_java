@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.forestry.dao.CertDao">
+    <insert id="addWoodCert">
+        insert wood_cert (amount, noticePic, ladingPic, declarationPic, cid)
+        select #{woodCert.amount}, #{woodCert.noticePic}, #{woodCert.ladingPic}, #{woodCert.declarationPic}, cid
+        from company_user_c where uid = #{userId};
+    </insert>
+
+    <insert id="addBoardCert">
+        insert board_cert (amount, noticePic, declarationPic, contractPic, cid)
+        select #{boardCert.amount}, #{boardCert.noticePic}, #{boardCert.declarationPic}, #{boardCert.contractPic}, cid
+        from company_user_c where uid = #{userId};
+    </insert>
+</mapper>

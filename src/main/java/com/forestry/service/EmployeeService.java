@@ -1,6 +1,7 @@
 package com.forestry.service;
 
 import com.forestry.bean.User;
+import com.forestry.dao.AuthDao;
 import com.forestry.dao.EmployeeDao;
 import com.forestry.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import java.util.List;
 public class EmployeeService {
     @Autowired
     EmployeeDao employeeDao;
+    @Autowired
+    AuthDao authDao;
 
     public List<User> getEmployee() {
         return employeeDao.getEmployee(UserUtil.getUserInfo().getId());
@@ -38,17 +41,19 @@ public class EmployeeService {
     }
 
     public int addEmployeeList(ArrayList<User> userList) {
+        int employeeRoleId = 2;
         for(User user : userList) {
             if(this.getEmployeeByNameOrUsername(user.getName(), user.getUsername()) != null) {
                 return -1;
             }
 
-            if(this.addEmployee(user) == 1) {
-                if(this.relatedCompanyAndEmployee(user.getId()) != 1) {
-                    return -2;
-                }
+            if(this.addEmployee(user) != 1) {
+                return -2;
             }
-            else {
+            if(this.relatedCompanyAndEmployee(user.getId()) != 1) {
+                return -2;
+            }
+            if(authDao.addRole(user.getId(), employeeRoleId) != 1) {
                 return -2;
             }
         }

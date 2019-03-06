@@ -2,7 +2,6 @@ package com.forestry.dao;
 
 import com.forestry.bean.Role;
 import com.forestry.bean.User;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
