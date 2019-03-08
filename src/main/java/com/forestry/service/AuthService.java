@@ -3,6 +3,7 @@ package com.forestry.service;
 import com.forestry.bean.User;
 import com.forestry.dao.AuthDao;
 import com.forestry.util.RedisUtil;
+import com.forestry.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -94,5 +95,15 @@ public class AuthService implements UserDetailsService {
         User user = authDao.loadUserByUsername(username);
 
         return authDao.addRole(user.getId(), roleId);
+    }
+
+    public int changePassword(String currentPassword, String newPassword) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+        if(!encoder.matches(currentPassword, UserUtil.getUserInfo().getPassword())) {
+            return -1;
+        }
+
+        return this.updateUser(UserUtil.getUserInfo().getUsername(), newPassword);
     }
 }

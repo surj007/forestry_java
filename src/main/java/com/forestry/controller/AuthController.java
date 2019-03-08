@@ -119,8 +119,8 @@ System.out.println(code);
     @RequestMapping(value = "/forgetPwd", method = RequestMethod.POST)
     public CommonResDto resetPwd(HttpServletResponse res, @RequestBody Map<String,Object> reqMap) {
         if(reqMap.get("username") == null ||
-           reqMap.get("code") == null ||
-           reqMap.get("password") == null) {
+        reqMap.get("code") == null ||
+        reqMap.get("password") == null) {
             res.setStatus(400);
 
             return CommonResDto.error("缺少参数");
@@ -145,5 +145,26 @@ System.out.println(code);
         }
 
         return CommonResDto.error("resetPwd failed");
+    }
+
+    @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+    public CommonResDto changePassword(HttpServletResponse res, @RequestBody Map<String,Object> reqMap) {
+        if(reqMap.get("newPassword") == null ||
+        reqMap.get("currentPassword") == null) {
+            res.setStatus(400);
+
+            return CommonResDto.error("缺少参数");
+        }
+
+        int result = authService.changePassword(reqMap.get("currentPassword").toString(), reqMap.get("newPassword").toString());
+
+        if(result == -1) {
+            return CommonResDto.error("当前密码错误");
+        }
+        else if(result == 1) {
+            return CommonResDto.ok("changePassword success");
+        }
+
+        return CommonResDto.error("changePassword failed");
     }
 }
