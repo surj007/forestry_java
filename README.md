@@ -1,6 +1,7 @@
 # forestry_java
 
 ###TODO 
+1、@Component @Configuration
 
 ###上线需要修改
 1、执行sql  

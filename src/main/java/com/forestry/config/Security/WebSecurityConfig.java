@@ -39,6 +39,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     AuthAccessDeniedHandler authAccessDeniedHandler;
     @Autowired
     UnAuthHandler unAuthHandler;
+    @Autowired
+    CustomLogoutSuccessHandler customLogoutSuccessHandler;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -60,15 +62,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-            .authorizeRequests()
-                .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
-                    @Override
-                    public <O extends FilterSecurityInterceptor> O postProcess(O o) {
-                        o.setSecurityMetadataSource(securityMetadataSource);
-                        o.setAccessDecisionManager(urlAccessDecisionManager);
-                        return o;
-                    }
-                })
+        .authorizeRequests()
+            .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
+                @Override
+                public <O extends FilterSecurityInterceptor> O postProcess(O o) {
+                    o.setSecurityMetadataSource(securityMetadataSource);
+                    o.setAccessDecisionManager(urlAccessDecisionManager);
+                    return o;
+                }
+            })
         .and()
             .formLogin()
                 .loginProcessingUrl("/auth/login")
@@ -111,11 +113,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .logout()
                 .permitAll()
                 .logoutUrl("/auth/logout")
+                .logoutSuccessHandler(customLogoutSuccessHandler) // logout后不再重定向，返回json
         .and()
             .csrf().disable()
-                .exceptionHandling()
-                    .authenticationEntryPoint(unAuthHandler)
-                    .accessDeniedHandler(authAccessDeniedHandler)
+        .exceptionHandling()
+            .authenticationEntryPoint(unAuthHandler)
+            .accessDeniedHandler(authAccessDeniedHandler)
         .and()
             .sessionManagement()
                 .maximumSessions(1)
