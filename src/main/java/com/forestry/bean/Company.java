@@ -3,7 +3,6 @@ package com.forestry.bean;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 
 public class Company {
     @NotNull
@@ -81,6 +80,8 @@ public class Company {
 
     @NotBlank
     private String commitPic;
+
+    private int status;
 
     private String create_time;
 
@@ -284,6 +285,14 @@ public class Company {
 
     public void setCommitPic(String commitPic) {
         this.commitPic = commitPic;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public String getCreate_time() {

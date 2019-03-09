@@ -18,13 +18,11 @@ public class EmployeeService {
     EmployeeDao employeeDao;
     @Autowired
     AuthDao authDao;
+    @Autowired
+    AuthService authService;
 
     public List<User> getEmployee() {
         return employeeDao.getEmployee(UserUtil.getUserInfo().getId());
-    }
-
-    public User getEmployeeByNameOrUsername(String name, String username) {
-        return employeeDao.getEmployeeByNameOrUsername(name, username);
     }
 
     public int addEmployee(User user) {
@@ -36,17 +34,52 @@ public class EmployeeService {
         return employeeDao.relatedCompanyAndEmployee(uid, UserUtil.getUserInfo().getId());
     }
 
-    public int updateEmployee(User user) {
-        return employeeDao.updateEmployee(user);
-    }
-
     public int addEmployeeList(ArrayList<User> userList) {
         int employeeRoleId = 2;
+
         for(User user : userList) {
-            if(this.getEmployeeByNameOrUsername(user.getName(), user.getUsername()) != null) {
+            if(authService.isReg(user.getUsername())) {
                 return -1;
             }
 
+            if(this.addEmployee(user) != 1) {
+                return -2;
+            }
+            if(this.relatedCompanyAndEmployee(user.getId()) != 1) {
+                return -2;
+            }
+            if(authDao.addRole(user.getId(), employeeRoleId) != 1) {
+                return -2;
+            }
+        }
+
+        return 0;
+    }
+
+    public int editEmployeeList(ArrayList<User> userList) {
+        int employeeRoleId = 2;
+
+        for(User user : userList) {
+            User registeredUser = authDao.loadUserByUsername(user.getUsername());
+            if(registeredUser != null && registeredUser.getBoss() != UserUtil.getUserInfo().getId()) {
+                return -1;
+            }
+        }
+
+        List<User> registeredUserList = this.getEmployee();
+        for(User user : registeredUserList) {
+            if(employeeDao.delEmployee(user.getId()) != 1) {
+                return -2;
+            }
+            if(employeeDao.delRelateCompanyAndEmployee(user.getId()) != 1) {
+                return -2;
+            }
+            if(authDao.delRole(user.getId()) != 1) {
+                return -2;
+            }
+        }
+
+        for(User user : userList) {
             if(this.addEmployee(user) != 1) {
                 return -2;
             }

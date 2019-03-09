@@ -17,4 +17,6 @@ public interface AuthDao {
     int updateUser(String username, String password);
 
     int addRole(int uid, int rid);
+
+    int delRole(int uid);
 }

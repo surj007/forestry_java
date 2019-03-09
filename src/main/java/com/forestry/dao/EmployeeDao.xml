@@ -5,10 +5,6 @@
         select b.* from user_c as a left join user_c as b on a.id = b.boss where a.id = #{userId};
     </select>
 
-    <select id="getEmployeeByNameOrUsername" resultType="com.forestry.bean.User">
-        select * from user_c where boss is not null and (name = #{name} or username = #{username});
-    </select>
-
     <insert id="addEmployee" parameterType="com.forestry.bean.User">
         <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
             select LAST_INSERT_ID();
@@ -20,4 +16,12 @@
     <insert id="relatedCompanyAndEmployee">
         insert company_user_c (uid, cid) select #{uid}, cid from company_user_c where uid = #{userId};
     </insert>
+
+    <delete id="delEmployee">
+        delete from user_c where id = #{id};
+    </delete>
+
+    <delete id="delRelateCompanyAndEmployee">
+        delete from company_user_c where uid = #{uid};
+    </delete>
 </mapper>

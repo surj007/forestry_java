@@ -26,4 +26,36 @@
     <insert id="relatedCompanyAndUser">
         insert company_user_c (uid, cid) values (#{uid}, #{cid})
     </insert>
+
+    <update id="updateCompany">
+        update company_c
+        <set>
+            name = #{name},
+            code = #{code},
+            corporation = #{corporation},
+            phone = #{phone},
+            address = #{address},
+            store = #{store},
+            companyType = #{companyType},
+            source = #{source},
+            outCityCompany = #{outCityCompany},
+            outCityCompanyName = #{outCityCompanyName},
+            kind = #{kind},
+            saw = #{saw},
+            sawOutput = #{sawOutput},
+            other = #{other},
+            otherOutput = #{otherOutput},
+            product = #{product},
+            saleArea = #{saleArea},
+            saleMount = #{saleMount},
+            remark = #{remark},
+            licencePic = #{licencePic},
+            cardFrontPic = #{cardFrontPic},
+            cardOppositePic = #{cardOppositePic},
+            notificationPic = #{notificationPic},
+            commitPic = #{commitPic},
+            status = 1
+        </set>
+        where id = #{id} and (status = 2 or status = 3);
+    </update>
 </mapper>

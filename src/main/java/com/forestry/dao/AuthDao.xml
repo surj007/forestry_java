@@ -54,4 +54,8 @@
     <insert id="addRole">
         insert user_role_c (uid, rid) values (#{uid}, #{rid});
     </insert>
+
+    <delete id="delRole">
+        delete from user_role_c where uid = #{uid};
+    </delete>
 </mapper>
