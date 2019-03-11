@@ -12,4 +12,26 @@
         select #{boardCert.amount}, #{boardCert.noticePic}, #{boardCert.declarationPic}, #{boardCert.contractPic}, cid
         from company_user_c where uid = #{userId};
     </insert>
+
+    <select id="getBoardCertAmount" resultType="java.lang.Integer">
+        select coalesce(sum(amount), 0) from (select sum(amount) as amount from board_cert where cid = (select cid from company_user_c where uid = #{uid}) and status = 2 group by cid) as a;
+    </select>
+
+    <select id="getWoodCertAmount" resultType="java.lang.Integer">
+        select coalesce(sum(amount), 0) from (select sum(amount) as amount from wood_cert where cid = (select cid from company_user_c where uid = #{uid}) and status = 2 group by cid) as a;
+    </select>
+
+    <select id="getBoardCert" resultType="com.forestry.bean.BoardCert">
+        select * from board_cert
+        <if test="status != 0">
+            where status = #{status}
+        </if>
+    </select>
+
+    <select id="getWoodCert" resultType="com.forestry.bean.WoodCert">
+        select * from wood_cert
+        <if test="status != 0">
+            where status = #{status}
+        </if>
+    </select>
 </mapper>

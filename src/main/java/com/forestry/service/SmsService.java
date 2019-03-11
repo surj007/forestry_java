@@ -26,7 +26,7 @@ public class SmsService {
 
         SendSmsRequest request = new SendSmsRequest();
         request.setPhoneNumbers(phone);
-        request.setSignName("大师链");
+        request.setSignName("百分之一");
         request.setTemplateCode("SMS_151231743");
         request.setTemplateParam("{\"code\":\"" + code + "\"}");
 

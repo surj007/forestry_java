@@ -11,5 +11,5 @@ public interface CompanyDao {
 
     int relatedCompanyAndUser(int uid, int cid);
 
-    int updateCompany(Company company);
+    int updateCompany(Company company); // 想获取插入后的主键，如果有@param，keyProperty需要写company.id
 }
