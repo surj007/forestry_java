@@ -1,6 +1,7 @@
 package com.forestry.service;
 
 import com.forestry.bean.BoardCert;
+import com.forestry.bean.PlantCert;
 import com.forestry.bean.WoodCert;
 import com.forestry.dao.CertDao;
 import com.forestry.util.UserUtil;
@@ -21,6 +22,10 @@ public class CertService {
         return certDao.addWoodCert(woodCert, UserUtil.getUserInfo().getId());
     }
 
+    public int addPlantCert(PlantCert plantCert) {
+        return certDao.addPlantCert(plantCert, UserUtil.getUserInfo().getId());
+    }
+
     public int addBoardCert(BoardCert boardCert) {
         return certDao.addBoardCert(boardCert, UserUtil.getUserInfo().getId());
     }
@@ -39,13 +44,19 @@ public class CertService {
 
     @Async
     public Future<List<BoardCert>> getBoardCert(int status) {
-        List<BoardCert> boardCertList  = certDao.getBoardCert(status);
+        List<BoardCert> boardCertList  = certDao.getBoardCert(status, UserUtil.getUserInfo().getId());
         return new AsyncResult<>(boardCertList);
     }
 
     @Async
     public Future<List<WoodCert>> getWoodCert(int status) {
-        List<WoodCert> woodCertList  = certDao.getWoodCert(status);
+        List<WoodCert> woodCertList  = certDao.getWoodCert(status, UserUtil.getUserInfo().getId());
         return new AsyncResult<>(woodCertList);
+    }
+
+    @Async
+    public Future<List<PlantCert>> getPlantCert(int status) {
+        List<PlantCert> plantCertList  = certDao.getPlantCert(status, UserUtil.getUserInfo().getId());
+        return new AsyncResult<>(plantCertList);
     }
 }

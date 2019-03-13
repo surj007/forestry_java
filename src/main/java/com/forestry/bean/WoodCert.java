@@ -3,6 +3,8 @@ package com.forestry.bean;
 import javax.validation.constraints.NotBlank;
 
 public class WoodCert {
+    private int id;
+
     @NotBlank
     private String amount;
 
@@ -15,11 +17,21 @@ public class WoodCert {
     @NotBlank
     private String declarationPic;
 
+    private int cid;
+
     private String window;
 
     private int status;
 
     private String create_time;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getAmount() {
         return amount;
@@ -51,6 +63,14 @@ public class WoodCert {
 
     public void setDeclarationPic(String declarationPic) {
         this.declarationPic = declarationPic;
+    }
+
+    public int getCid() {
+        return cid;
+    }
+
+    public void setCid(int cid) {
+        this.cid = cid;
     }
 
     public String getWindow() {

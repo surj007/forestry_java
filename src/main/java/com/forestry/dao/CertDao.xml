@@ -13,6 +13,18 @@
         from company_user_c where uid = #{userId};
     </insert>
 
+    <insert id="addPlantCert">
+        insert plant_cert (producing_area, processing_area, plant_name, variety, car_amount, every_car_amount,
+                           packaging, standard, receive_person, receive_address_type, receive_address, phone,
+                           person_id, date_time, apply_person, transport_person, report_number, car_number, cid)
+        select #{plantCert.producing_area}, #{plantCert.processing_area}, #{plantCert.plant_name}, #{plantCert.variety},
+               #{plantCert.car_amount}, #{plantCert.every_car_amount}, #{plantCert.packaging}, #{plantCert.standard},
+               #{plantCert.receive_person}, #{plantCert.receive_address_type}, #{plantCert.receive_address}, #{plantCert.phone},
+               #{plantCert.person_id}, #{plantCert.date_time}, #{plantCert.apply_person}, #{plantCert.transport_person},
+               #{plantCert.report_number}, #{plantCert.car_number}, cid
+        from company_user_c where uid = #{userId};
+    </insert>
+
     <select id="getBoardCertAmount" resultType="java.lang.Integer">
         select coalesce(sum(amount), 0) from (select sum(amount) as amount from board_cert where cid = (select cid from company_user_c where uid = #{uid}) and status = 2 group by cid) as a;
     </select>
@@ -22,16 +34,23 @@
     </select>
 
     <select id="getBoardCert" resultType="com.forestry.bean.BoardCert">
-        select * from board_cert
+        select * from board_cert where cid = (select cid from company_user_c where uid = #{uid})
         <if test="status != 0">
-            where status = #{status}
+            and status = #{status}
         </if>
     </select>
 
     <select id="getWoodCert" resultType="com.forestry.bean.WoodCert">
-        select * from wood_cert
+        select * from wood_cert where cid = (select cid from company_user_c where uid = #{uid})
         <if test="status != 0">
-            where status = #{status}
+            and status = #{status}
+        </if>
+    </select>
+
+    <select id="getPlantCert" resultType="com.forestry.bean.PlantCert">
+        select * from plant_cert where cid = (select cid from company_user_c where uid = #{uid})
+        <if test="status != 0">
+            and status = #{status}
         </if>
     </select>
 </mapper>

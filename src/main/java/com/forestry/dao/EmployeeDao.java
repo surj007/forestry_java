@@ -14,4 +14,6 @@ public interface EmployeeDao {
     int delEmployee(int id);
 
     int delRelateCompanyAndEmployee(int uid);
+
+    int changeCompanyStatus(int uid);
 }

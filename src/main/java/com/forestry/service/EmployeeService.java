@@ -93,4 +93,8 @@ public class EmployeeService {
 
         return 0;
     }
+
+    public int changeCompanyStatus() {
+        return employeeDao.changeCompanyStatus(UserUtil.getUserInfo().getId());
+    }
 }

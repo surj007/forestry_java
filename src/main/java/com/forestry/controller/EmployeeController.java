@@ -71,6 +71,11 @@ public class EmployeeController {
             return CommonResDto.error("修改业务员失败，请重新提交");
         }
         else {
+            int changeStatusResult = employeeService.changeCompanyStatus();
+
+            if(changeStatusResult != 1) {
+                return CommonResDto.error("editEmployee failed");
+            }
             return CommonResDto.ok("editEmployee success");
         }
     }

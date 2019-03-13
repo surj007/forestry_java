@@ -1,6 +1,7 @@
 package com.forestry.dao;
 
 import com.forestry.bean.BoardCert;
+import com.forestry.bean.PlantCert;
 import com.forestry.bean.WoodCert;
 import org.apache.ibatis.annotations.Param;
 
@@ -11,11 +12,15 @@ public interface CertDao {
 
     int addBoardCert(BoardCert boardCert, int userId);
 
+    int addPlantCert(PlantCert plantCert, int userId);
+
     int getBoardCertAmount(int uid);
 
     int getWoodCertAmount(int uid);
 
-    List<BoardCert> getBoardCert(@Param("status") int status); // xml中if取参数必须加@param注解
+    List<BoardCert> getBoardCert(@Param("status") int status, @Param("uid") int uid); // xml中if取参数必须加@param注解
 
-    List<WoodCert> getWoodCert(@Param("status") int status);
+    List<WoodCert> getWoodCert(@Param("status") int status, @Param("uid") int uid);
+
+    List<PlantCert> getPlantCert(@Param("status") int status, @Param("uid") int uid);
 }

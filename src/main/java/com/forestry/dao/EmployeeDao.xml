@@ -24,4 +24,12 @@
     <delete id="delRelateCompanyAndEmployee">
         delete from company_user_c where uid = #{uid};
     </delete>
+
+    <update id="changeCompanyStatus">
+        update company_c
+        <set>
+            status = 1
+        </set>
+        where (select cid from company_user_c where uid = #{uid});
+    </update>
 </mapper>

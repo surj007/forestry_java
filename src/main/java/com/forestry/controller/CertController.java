@@ -1,6 +1,7 @@
 package com.forestry.controller;
 
 import com.forestry.bean.BoardCert;
+import com.forestry.bean.PlantCert;
 import com.forestry.bean.WoodCert;
 import com.forestry.dto.CommonResDto;
 import com.forestry.service.CertService;
@@ -40,6 +41,15 @@ public class CertController {
         return CommonResDto.error("添加板材类开证单失败，请重新提交");
     }
 
+    @RequestMapping(value = "/addPlantCert", method = RequestMethod.POST)
+    public CommonResDto addPlantCert(@RequestBody @Valid PlantCert plantCert, BindingResult bindingResult) {
+        if(certService.addPlantCert(plantCert) == 1) {
+            return CommonResDto.ok("addPlantCert success");
+        }
+
+        return CommonResDto.error("添加木材运输证与植物检疫申请失败，请重新提交");
+    }
+
     @RequestMapping(value = "/getCertAmount", method = RequestMethod.GET)
     public CommonResDto getCertAmount() throws ExecutionException, InterruptedException {
         Map<String, Object> resMap = new HashMap<>();
@@ -68,8 +78,10 @@ public class CertController {
             case "": {
                 keyArray[0] = "boardCert";
                 keyArray[1] = "woodCert";
+                keyArray[2] = "plantCert";
                 futureList.add(certService.getBoardCert(status));
                 futureList.add(certService.getWoodCert(status));
+                futureList.add(certService.getPlantCert(status));
 
                 break;
             }
@@ -86,6 +98,9 @@ public class CertController {
                 break;
             }
             case "plant": {
+                keyArray[0] = "plantCert";
+                futureList.add(certService.getPlantCert(status));
+
                 break;
             }
             default: {
