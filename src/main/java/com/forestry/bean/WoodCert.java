@@ -19,9 +19,11 @@ public class WoodCert {
 
     private int cid;
 
-    private String window;
+    private String windows;
 
     private int status;
+
+    private String refuse_reason;
 
     private String create_time;
 
@@ -73,12 +75,12 @@ public class WoodCert {
         this.cid = cid;
     }
 
-    public String getWindow() {
-        return window;
+    public String getWindows() {
+        return windows;
     }
 
-    public void setWindow(String window) {
-        this.window = window;
+    public void setWindows(String windows) {
+        this.windows = windows;
     }
 
     public int getStatus() {
@@ -87,6 +89,14 @@ public class WoodCert {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getRefuse_reason() {
+        return refuse_reason;
+    }
+
+    public void setRefuse_reason(String refuse_reason) {
+        this.refuse_reason = refuse_reason;
     }
 
     public String getCreate_time() {

@@ -83,6 +83,8 @@ public class Company {
 
     private int status;
 
+    private String refuse_reason;
+
     private String create_time;
 
     private String last_modify_time;
@@ -293,6 +295,14 @@ public class Company {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getRefuse_reason() {
+        return refuse_reason;
+    }
+
+    public void setRefuse_reason(String refuse_reason) {
+        this.refuse_reason = refuse_reason;
     }
 
     public String getCreate_time() {

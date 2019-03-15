@@ -60,11 +60,19 @@ public class PlantCert {
     @NotBlank
     private String car_number;
 
+    private String picture_url;
+
+    private String picture_location;
+
+    private String picture_time;
+
     private int cid;
 
-    private String window;
+    private String windows;
 
     private int status;
+
+    private String refuse_reason;
 
     private String create_time;
 
@@ -220,6 +228,30 @@ public class PlantCert {
         this.car_number = car_number;
     }
 
+    public String getPicture_url() {
+        return picture_url;
+    }
+
+    public void setPicture_url(String picture_url) {
+        this.picture_url = picture_url;
+    }
+
+    public String getPicture_location() {
+        return picture_location;
+    }
+
+    public void setPicture_location(String picture_location) {
+        this.picture_location = picture_location;
+    }
+
+    public String getPicture_time() {
+        return picture_time;
+    }
+
+    public void setPicture_time(String picture_time) {
+        this.picture_time = picture_time;
+    }
+
     public int getCid() {
         return cid;
     }
@@ -228,12 +260,12 @@ public class PlantCert {
         this.cid = cid;
     }
 
-    public String getWindow() {
-        return window;
+    public String getWindows() {
+        return windows;
     }
 
-    public void setWindow(String window) {
-        this.window = window;
+    public void setWindows(String windows) {
+        this.windows = windows;
     }
 
     public int getStatus() {
@@ -242,6 +274,14 @@ public class PlantCert {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getRefuse_reason() {
+        return refuse_reason;
+    }
+
+    public void setRefuse_reason(String refuse_reason) {
+        this.refuse_reason = refuse_reason;
     }
 
     public String getCreate_time() {
