@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,6 +49,23 @@ public class CertController {
         }
 
         return CommonResDto.error("添加木材运输证与植物检疫申请失败，请重新提交");
+    }
+
+    @RequestMapping(value = "/addPlantCertPicture", method = RequestMethod.POST)
+    public CommonResDto addPlantCertPicture(HttpServletResponse res, @RequestBody Map<String, Object> reqMap) {
+        if(reqMap.get("picture_url") == null ||
+        reqMap.get("picture_location") == null ||
+        reqMap.get("picture_time") == null ||
+        reqMap.get("id") == null) {
+            res.setStatus(400);
+            return CommonResDto.error("缺少参数");
+        }
+
+        if(certService.addPlantCertPicture(reqMap.get("id").toString(), reqMap.get("picture_url").toString(), reqMap.get("picture_location").toString(), reqMap.get("picture_time").toString()) == 1) {
+            return CommonResDto.ok("addPlantCertPicture success");
+        }
+
+        return CommonResDto.error("上传车辆运输图片失败，请重新提交");
     }
 
     @RequestMapping(value = "/getCertAmount", method = RequestMethod.GET)

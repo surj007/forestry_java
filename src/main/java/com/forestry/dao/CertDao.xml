@@ -25,6 +25,18 @@
         from company_user_c where uid = #{userId};
     </insert>
 
+    <update id="addPlantCertPicture">
+        update plant_cert
+        <set>
+            picture_url = #{picture_url},
+            picture_location = #{picture_location},
+            picture_time = #{picture_time},
+            status = 1,
+            create_time = current_timestamp
+        </set>
+        where id = #{id} and cid = (select cid from company_user_c where uid = #{userId});
+    </update>
+
     <select id="getBoardCertAmount" resultType="java.lang.Integer">
         select coalesce(sum(amount), 0) from (select sum(amount) as amount from board_cert where cid = (select cid from company_user_c where uid = #{uid}) and status = 2 group by cid) as a;
     </select>

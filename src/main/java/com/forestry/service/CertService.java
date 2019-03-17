@@ -30,6 +30,10 @@ public class CertService {
         return certDao.addBoardCert(boardCert, UserUtil.getUserInfo().getId());
     }
 
+    public int addPlantCertPicture(String id, String picture_url, String picture_location, String picture_time) {
+        return certDao.addPlantCertPicture(id, picture_url, picture_location, picture_time, UserUtil.getUserInfo().getId());
+    }
+
     @Async
     public Future<Integer> getBoardCertAmount() {
         int boardCertAmount = certDao.getBoardCertAmount(UserUtil.getUserInfo().getId());

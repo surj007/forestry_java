@@ -14,6 +14,8 @@ public interface CertDao {
 
     int addPlantCert(PlantCert plantCert, int userId);
 
+    int addPlantCertPicture(String id, String picture_url, String picture_location, String picture_time, int userId);
+
     int getBoardCertAmount(int uid);
 
     int getWoodCertAmount(int uid);
