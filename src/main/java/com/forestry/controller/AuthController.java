@@ -40,7 +40,7 @@ public class AuthController {
 
         if(redisUtil.setWithExpire(phone, code, 300) == 0) {
             try {
-                //smsService.sendSms(phone, code);
+                smsService.sendSms(phone, code);
                 return CommonResDto.ok("getCode4Reg success");
             }
             catch(Exception e) {
@@ -70,7 +70,7 @@ System.out.println(code);
         }
         else {
             try {
-                //smsService.sendSms(phone, code);
+                smsService.sendSms(phone, code);
                 return CommonResDto.ok("getCode4Login success");
             }
             catch(Exception e) {

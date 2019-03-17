@@ -73,9 +73,6 @@ public class EmployeeController {
         else {
             int changeStatusResult = employeeService.changeCompanyStatus();
 
-            if(changeStatusResult != 1) {
-                return CommonResDto.error("editEmployee failed");
-            }
             return CommonResDto.ok("editEmployee success");
         }
     }

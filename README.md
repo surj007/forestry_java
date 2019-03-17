@@ -6,6 +6,6 @@
 
 ###上线需要修改
 1、执行sql  
-2、application.properties中数据库三个修改  
-3、log配置拿出来  
-4、AuthController中smsService打开  
+2、application.properties中数据库url、username、password  
+3、AuthController中smsService打开  
+4、log配置拿出来？ 

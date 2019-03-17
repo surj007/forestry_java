@@ -68,14 +68,16 @@ public class EmployeeService {
 
         List<User> registeredUserList = this.getEmployee();
         for(User user : registeredUserList) {
-            if(employeeDao.delEmployee(user.getId()) != 1) {
-                return -2;
-            }
-            if(employeeDao.delRelateCompanyAndEmployee(user.getId()) != 1) {
-                return -2;
-            }
-            if(authDao.delRole(user.getId()) != 1) {
-                return -2;
+            if(user != null) {
+                if(employeeDao.delEmployee(user.getId()) != 1) {
+                    return -2;
+                }
+                if(employeeDao.delRelateCompanyAndEmployee(user.getId()) != 1) {
+                    return -2;
+                }
+                if(authDao.delRole(user.getId()) != 1) {
+                    return -2;
+                }
             }
         }
 
