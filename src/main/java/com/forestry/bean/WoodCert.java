@@ -25,6 +25,8 @@ public class WoodCert {
 
     private String refuse_reason;
 
+    private String check_person;
+
     private String create_time;
 
     public int getId() {
@@ -97,6 +99,14 @@ public class WoodCert {
 
     public void setRefuse_reason(String refuse_reason) {
         this.refuse_reason = refuse_reason;
+    }
+
+    public String getCheck_person() {
+        return check_person;
+    }
+
+    public void setCheck_person(String check_person) {
+        this.check_person = check_person;
     }
 
     public String getCreate_time() {
