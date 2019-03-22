@@ -27,6 +27,8 @@ public class BoardCert {
 
     private String check_person;
 
+    private String approve_remark;
+
     private String create_time;
 
     public int getId() {
@@ -107,6 +109,14 @@ public class BoardCert {
 
     public void setCheck_person(String check_person) {
         this.check_person = check_person;
+    }
+
+    public String getApprove_remark() {
+        return approve_remark;
+    }
+
+    public void setApprove_remark(String approve_remark) {
+        this.approve_remark = approve_remark;
     }
 
     public String getCreate_time() {
