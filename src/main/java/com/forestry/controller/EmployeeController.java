@@ -31,6 +31,25 @@ public class EmployeeController {
 
     @PreAuthorize("hasRole('ROLE_admin')")
     @RequestMapping(value = "/addEmployee", method = RequestMethod.POST)
+    // 这块employee参数是个数组，可以按当前方法处理
+    /*
+        也可以直接封装dto接收数组
+        @Data
+        public class EmployeeDTO {
+            private User[] employee;
+            // private List<User> employee;
+        }
+        @RequestBody EmployeeDTO employeeDTO
+        User[] users = employeeDTO.getEmployee();
+        //  List<User> users = employeeDTO.getEmployee();
+
+    */
+    /* 
+        或者
+        @RequestBody JSONObject jsonObject
+        JSONArray jsonArray = jsonObject.getJSONArray("employee");
+        List<User> userList = (List)JSONArray.toCollection(jsonArray, User.class);
+    */
     public CommonResDto addEmployee(HttpServletResponse res, @RequestBody Map<String, Object> reqMap) {
         ArrayList<User> userList = CommonUtil.formatReqMapItem2ArrayList(reqMap.get("employee"), User.class);
         for(User user : userList) {
@@ -41,7 +60,7 @@ public class EmployeeController {
         }
 
         int result = employeeService.addEmployeeList(userList);
-        if(result == -1) {
+        if (result == -1) {
             return CommonResDto.error("业务员手机号已存在，请重新提交");
         }
         else if(result == -2) {

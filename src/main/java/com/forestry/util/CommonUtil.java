@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class CommonUtil {
+    // 生成随机6位短信验证码
     public static String generateCode() {
         return String.valueOf((int)((Math.random() * 9 + 1) * 100000));
     }
@@ -18,6 +19,7 @@ public class CommonUtil {
         return LoggerFactory.getLogger(currentClass);
     }
 
+    // 将json数组转换为ArrayList
     public static ArrayList formatReqMapItem2ArrayList(Object reqMapItem, Class entityClass) {
         ArrayList arrayList = new ArrayList();
         JSONArray jsonArray = JSONArray.parseArray(JSONObject.toJSONString(reqMapItem));

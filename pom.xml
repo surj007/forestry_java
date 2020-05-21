@@ -38,6 +38,10 @@
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>1.3.2</version>
         </dependency>
+        <!-- 
+            这种虽然druid中会默认引入，但是有可能springboot依赖的版本和druid中不一样
+            还是应该显式的写出来，继承spring-boot-starter-parent中的版本
+        -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>

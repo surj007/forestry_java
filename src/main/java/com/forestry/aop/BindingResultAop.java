@@ -8,6 +8,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 
+// 这个aop是用来配合bean中@NotBlank这类注解进行请求参数检验
 @Component
 @Aspect
 public class BindingResultAop {
@@ -18,14 +19,15 @@ public class BindingResultAop {
     public Object around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         BindingResult bindingResult = null;
 
-        for(Object arg : proceedingJoinPoint.getArgs()){
-            if(arg instanceof BindingResult){
-                bindingResult = (BindingResult) arg;
+        // proceedingJoinPoint.getArgs()为拦截到的方法的参数列表
+        for (Object arg : proceedingJoinPoint.getArgs()) {
+            if (arg instanceof BindingResult) {
+                bindingResult = (BindingResult)arg;
             }
         }
 
-        if(bindingResult != null){
-            if(bindingResult.hasErrors()){
+        if (bindingResult != null) {
+            if (bindingResult.hasErrors()) {
                 return CommonResDto.error(bindingResult.getFieldError().getField() + " " + bindingResult.getFieldError().getDefaultMessage());
             }
         }

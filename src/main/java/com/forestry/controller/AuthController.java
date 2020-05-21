@@ -15,30 +15,29 @@ import java.util.Map;
 @RequestMapping("/auth")
 public class AuthController {
     @Autowired
-    AuthService authService;
+    private AuthService authService;
     @Autowired
-    RedisUtil redisUtil;
+    private RedisUtil redisUtil;
     @Autowired
-    SmsService smsService;
+    private SmsService smsService;
 
     @RequestMapping(value = "/getCode4RegAndResetPwd", method = RequestMethod.GET)
     public CommonResDto getCode4Reg(HttpServletResponse res, String phone, String type) {
-        if(phone == null||
-           type == null) {
+        if (phone == null || type == null) {
             res.setStatus(400);
 
             return CommonResDto.error("缺少参数");
         }
 
-        if(type.equals("resetPwd")) {
-            if(!authService.isReg(phone)) {
+        if (type.equals("resetPwd")) {
+            if (!authService.isReg(phone)) {
                 return CommonResDto.error("当前手机号未注册");
             }
         }
 
         String code = CommonUtil.generateCode();
 
-        if(redisUtil.setWithExpire(phone, code, 300) == 0) {
+        if (redisUtil.setWithSecondExpire(phone, code, 300) == 0) {
             try {
                 smsService.sendSms(phone, code);
                 return CommonResDto.ok("getCode4Reg success");

@@ -26,10 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-/*
- * @Configuration一般用于类中有@Bean的情况下，单例
- * @Component应该是平常用的类似@Service进行扫描，每次都会new一个实例
- */
+// 这块还需要看下bean中的user bean
 @Component
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {

@@ -5,6 +5,8 @@ import javax.validation.constraints.NotBlank;
 public class BoardCert {
     private int id;
 
+    // 所有类似@NotBlank的验证注解都可以@NotBlank(message = "数量不能为空")这样自定义返回message
+    // @NotBlank用于String上，代表String不能是null且去除两端空白字符后的长度大于0
     @NotBlank
     private String amount;
 

@@ -5,6 +5,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class Company {
+    // 不能为null，如果是集合类，size可以为0
+    // @NotEmpty用在集合类上面，代表String、Collection、Map、数组不能为null且长度不能为0
     @NotNull
     private int id;
 
@@ -33,6 +35,7 @@ public class Company {
     private String source;
 
     @NotNull
+    // 必须为数字相关类型，1位整数位，0为小数位
     @Digits(integer = 1, fraction = 0)
     private int outCityCompany;
 

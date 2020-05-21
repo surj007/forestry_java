@@ -12,7 +12,7 @@ public class RedisUtil {
     private RedisTemplate redisTemplate;
 
     public void del(String key) {
-        if(key != null) {
+        if (key != null) {
             redisTemplate.delete(key);
         }
     }
@@ -33,13 +33,13 @@ public class RedisUtil {
         }
     }
 
-    public int setWithExpire(String key, Object value, long time) {
+    public int setWithSecondExpire(String key, Object value, long time) {
         try {
             redisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);
             return 0;
         }
         catch(Exception e) {
-            CommonUtil.Logger(this.getClass()).error("redis setWithExpire err: ", e);
+            CommonUtil.Logger(this.getClass()).error("redis setWithSecondExpire err: ", e);
             e.printStackTrace();
             return -1;
         }

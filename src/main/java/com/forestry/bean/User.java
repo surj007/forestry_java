@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+// spring security有关联
 public class User implements UserDetails {
     private int id;
     private String username; // phone
@@ -24,6 +25,7 @@ public class User implements UserDetails {
     private List<Role> roles;
     private Date last_modify_time;
 
+    // controller中向前台返回bean类型数据时，忽略此属性
     @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {

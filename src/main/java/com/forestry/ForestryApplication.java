@@ -30,10 +30,11 @@ public class ForestryApplication {
             tArgs.processor(tProcessor);
             tArgs.protocolFactory(new TBinaryProtocol.Factory());
             TServer server = new TSimpleServer(tArgs);
-            System.out.println("rpc server listen 8080...");
             server.serve();
+            System.out.println("rpc server listen 8080...");
         }
-        catch(TTransportException e) {
+        catch (TTransportException e) {
+            // 这种打印日志可以直接引入lombok包，在当前类上注解@Slf4j，然后直接log.error()
             CommonUtil.Logger(ForestryApplication.class).error("rpc err: ", e);
             e.printStackTrace();
         }
