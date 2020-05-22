@@ -15,13 +15,16 @@ import java.io.PrintWriter;
 @Component
 public class GlobalExceptionResolver implements HandlerExceptionResolver {
     @Override
-    public ModelAndView resolveException(HttpServletRequest req, HttpServletResponse res, Object handler, Exception e) {
-        //HandlerExceptionResolver会先捕获AccessDeniedException错误，所以抛出，让后面的AccessDeniedHandler捕获
-        if(e instanceof AccessDeniedException) {
+    public ModelAndView resolveException(
+        HttpServletRequest req, 
+        HttpServletResponse res, 
+        Object handler, 
+        Exception e
+    ) {
+        // HandlerExceptionResolver会先捕获AccessDeniedException错误，所以抛出，让后面的AccessDeniedHandler捕获
+        if (e instanceof AccessDeniedException) {
             throw new AccessDeniedException("不允许访问", e);
         }
-
-        ModelAndView mv = new ModelAndView();
 
         try {
             res.setStatus(500);
@@ -37,6 +40,6 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
             CommonUtil.Logger(this.getClass()).error("global ex: ", ex);
         }
 
-        return mv;
+        return null;
     }
 }

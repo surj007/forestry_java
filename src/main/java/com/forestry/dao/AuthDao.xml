@@ -15,11 +15,14 @@
         <result column="last_modify_time" property="last_modify_time"/>
     </resultMap>
 
+    <!-- extends是为了服用，这块直接把userMap和这个resultMap合在一起写就行 -->
     <resultMap id="lazyLoadRoles" type="com.forestry.bean.User" extends="userMap">
-        <collection property="roles"
-                    ofType="com.forestry.bean.Role"
-                    select="com.forestry.dao.AuthDao.getRolesByUserId"
-                    column="id">
+        <collection 
+            property="roles"
+            ofType="com.forestry.bean.Role"
+            select="com.forestry.dao.AuthDao.getRolesByUserId"
+            column="id"
+        >
         </collection>
     </resultMap>
 
@@ -32,7 +35,7 @@
     </select>
 
     <insert id="regUser">
-        insert user_c (username, password) values (#{username}, #{password});
+        insert user_c(username, password) values(#{username}, #{password});
     </insert>
 
     <update id="updateCode">
@@ -52,7 +55,7 @@
     </update>
 
     <insert id="addRole">
-        insert user_role_c (uid, rid) values (#{uid}, #{rid});
+        insert user_role_c(uid, rid) values(#{uid}, #{rid});
     </insert>
 
     <delete id="delRole">

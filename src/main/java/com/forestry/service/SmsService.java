@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SmsService {
+    // 这块不用static也可以
     static final String product = "Dysmsapi";
     static final String domain = "dysmsapi.aliyuncs.com";
     static final String accessKeyId = "LTAIUR8UPrDx2ABa";

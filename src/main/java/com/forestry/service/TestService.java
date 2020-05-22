@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class TestService {
     @Autowired
-    TestDao testDao;
+    private TestDao testDao;
 
     public List<Test> getData() {
         return testDao.getData();

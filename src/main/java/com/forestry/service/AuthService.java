@@ -14,13 +14,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthService implements UserDetailsService {
     @Autowired
-    AuthDao authDao;
+    private AuthDao authDao;
     @Autowired
-    RedisUtil redisUtil;
+    private RedisUtil redisUtil;
 
     @Override
     public UserDetails loadUserByUsername(String usernameAndLoginType) throws UsernameNotFoundException {
-        if(!usernameAndLoginType.contains("-@_")) {
+        if (!usernameAndLoginType.contains("-@_")) {
             throw new UsernameNotFoundException("用户名格式错误");
         }
 
@@ -30,11 +30,11 @@ public class AuthService implements UserDetailsService {
 
         User user = authDao.loadUserByUsername(username);
 
-        if(user == null) {
+        if (user == null) {
             throw new UsernameNotFoundException("用户名不存在");
         }
 
-        if(loginType.equals("code")) {
+        if (loginType.equals("code")) {
             user.setPassword(user.getCode());
         }
 
@@ -42,7 +42,7 @@ public class AuthService implements UserDetailsService {
     }
 
     public int regUser(String username, String password) {
-        if(isReg(username)) {
+        if (isReg(username)) {
             return -1;
         }
 
@@ -55,10 +55,10 @@ public class AuthService implements UserDetailsService {
     public int checkCode(String username, String code) {
         Object validCode = redisUtil.get(username);
 
-        if(validCode == null) {
+        if (validCode == null) {
             return 1;
         }
-        else if(code.equals(validCode)) {
+        else if (code.equals(validCode)) {
             return 0;
         }
 
@@ -73,7 +73,7 @@ public class AuthService implements UserDetailsService {
     }
 
     public int updateUser(String username, String password) {
-        if(!isReg(username)) {
+        if (!isReg(username)) {
             return -1;
         }
 
@@ -84,7 +84,7 @@ public class AuthService implements UserDetailsService {
     }
 
     public boolean isReg(String username) {
-        if(authDao.loadUserByUsername(username) != null) {
+        if (authDao.loadUserByUsername(username) != null) {
             return true;
         }
 
@@ -100,7 +100,7 @@ public class AuthService implements UserDetailsService {
     public int changePassword(String currentPassword, String newPassword) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-        if(!encoder.matches(currentPassword, UserUtil.getUserInfo().getPassword())) {
+        if (!encoder.matches(currentPassword, UserUtil.getUserInfo().getPassword())) {
             return -1;
         }
 

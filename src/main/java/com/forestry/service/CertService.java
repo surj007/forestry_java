@@ -16,7 +16,7 @@ import java.util.concurrent.Future;
 @Service
 public class CertService {
     @Autowired
-    CertDao certDao;
+    private CertDao certDao;
 
     public int addWoodCert(WoodCert woodCert) {
         return certDao.addWoodCert(woodCert, UserUtil.getUserInfo().getId());

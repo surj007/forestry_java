@@ -20,7 +20,8 @@ public interface CertDao {
 
     int getWoodCertAmount(int uid);
 
-    List<BoardCert> getBoardCert(@Param("status") int status, @Param("uid") int uid); // xml中if取参数必须加@param注解
+    // xml中if取参数必须加@param注解
+    List<BoardCert> getBoardCert(@Param("status") int status, @Param("uid") int uid);
 
     List<WoodCert> getWoodCert(@Param("status") int status, @Param("uid") int uid);
 

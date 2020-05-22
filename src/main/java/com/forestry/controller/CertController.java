@@ -22,11 +22,11 @@ import java.util.concurrent.Future;
 @RequestMapping("/cert")
 public class CertController {
     @Autowired
-    CertService certService;
+    private CertService certService;
 
     @RequestMapping(value = "/addWoodCert", method = RequestMethod.POST)
     public CommonResDto addWoodCert(@RequestBody @Valid WoodCert woodCert, BindingResult bindingResult) {
-        if(certService.addWoodCert(woodCert) == 1) {
+        if (certService.addWoodCert(woodCert) == 1) {
             return CommonResDto.ok("addWoodCert success");
         }
 
@@ -35,7 +35,7 @@ public class CertController {
 
     @RequestMapping(value = "/addBoardCert", method = RequestMethod.POST)
     public CommonResDto addBoardCert(@RequestBody @Valid BoardCert boardCert, BindingResult bindingResult) {
-        if(certService.addBoardCert(boardCert) == 1) {
+        if (certService.addBoardCert(boardCert) == 1) {
             return CommonResDto.ok("addBoardCert success");
         }
 
@@ -44,7 +44,7 @@ public class CertController {
 
     @RequestMapping(value = "/addPlantCert", method = RequestMethod.POST)
     public CommonResDto addPlantCert(@RequestBody @Valid PlantCert plantCert, BindingResult bindingResult) {
-        if(certService.addPlantCert(plantCert) == 1) {
+        if (certService.addPlantCert(plantCert) == 1) {
             return CommonResDto.ok("addPlantCert success");
         }
 
@@ -53,15 +53,17 @@ public class CertController {
 
     @RequestMapping(value = "/addPlantCertPicture", method = RequestMethod.POST)
     public CommonResDto addPlantCertPicture(HttpServletResponse res, @RequestBody Map<String, Object> reqMap) {
-        if(reqMap.get("picture_url") == null ||
-        reqMap.get("picture_location") == null ||
-        reqMap.get("picture_time") == null ||
-        reqMap.get("id") == null) {
+        if (
+            reqMap.get("picture_url") == null ||
+            reqMap.get("picture_location") == null ||
+            reqMap.get("picture_time") == null ||
+            reqMap.get("id") == null
+        ) {
             res.setStatus(400);
             return CommonResDto.error("缺少参数");
         }
 
-        if(certService.addPlantCertPicture(reqMap.get("id").toString(), reqMap.get("picture_url").toString(), reqMap.get("picture_location").toString(), reqMap.get("picture_time").toString()) == 1) {
+        if (certService.addPlantCertPicture(reqMap.get("id").toString(), reqMap.get("picture_url").toString(), reqMap.get("picture_location").toString(), reqMap.get("picture_time").toString()) == 1) {
             return CommonResDto.ok("addPlantCertPicture success");
         }
 
@@ -86,9 +88,13 @@ public class CertController {
     }
 
     @RequestMapping(value = "/getCert", method = RequestMethod.GET)
-    public CommonResDto getCert(@RequestParam(name = "type") String type, @RequestParam(name = "status") int status) throws ExecutionException, InterruptedException {
+    // 这块没必要加@RequestParam
+    public CommonResDto getCert(
+        @RequestParam(name = "type") String type, 
+        @RequestParam(name = "status") int status
+    ) throws ExecutionException, InterruptedException {
         Map<String, Object> resMap = new HashMap<>();
-        List<Future> futureList = new ArrayList<>();
+        List<Future<List>> futureList = new ArrayList<>();
         String[] keyArray = new String[3];
         int i = 0;
 
@@ -97,6 +103,7 @@ public class CertController {
                 keyArray[0] = "boardCert";
                 keyArray[1] = "woodCert";
                 keyArray[2] = "plantCert";
+
                 futureList.add(certService.getBoardCert(status));
                 futureList.add(certService.getWoodCert(status));
                 futureList.add(certService.getPlantCert(status));
@@ -105,18 +112,21 @@ public class CertController {
             }
             case "wood": {
                 keyArray[0] = "woodCert";
+
                 futureList.add(certService.getWoodCert(status));
 
                 break;
             }
             case "board": {
                 keyArray[0] = "boardCert";
+
                 futureList.add(certService.getBoardCert(status));
 
                 break;
             }
             case "plant": {
                 keyArray[0] = "plantCert";
+
                 futureList.add(certService.getPlantCert(status));
 
                 break;

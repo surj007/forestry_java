@@ -5,8 +5,7 @@ public class CommonResDto {
     private String message;
     private Object data;
 
-    private CommonResDto() {
-    }
+    private CommonResDto() { }
 
     private CommonResDto(Integer code, String message, Object data) {
         this.code = code;

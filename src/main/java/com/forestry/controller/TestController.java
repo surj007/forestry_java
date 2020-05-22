@@ -13,26 +13,36 @@ import java.util.List;
 @RequestMapping("/test")
 public class TestController {
     @Autowired
-    TestService testService;
+    private TestService testService;
 
     /*
-       get请求获取参数：直接用@RequestParam校验
-       1、请求参数字段作为形参，(Sring username)
-       2、需要重命名字段或者对字段有要求的，(@RequestParam(...) String username)
-       3、字段较多时，直接用bean接收，(User user) user.getUserName()
+       get请求获取参数：
+       1、请求参数字段作为形参：getData(Sring username) {}
+       2、需要重命名字段或需要对字段校验的时候：getData(@RequestParam(name = "name", require = "true") String username) {}
+       3、字段较多时，直接用bean接收：getData(User user) {}
     */
+    /*
+       post请求获取参数
+       {
+        类型为x-www-form-urlencoded
+        {
+            请求参数字段作为形参：postData(Sring username) {}
+            需要重命名字段或需要对字段校验的时候：postData(@RequestParam(name = "name", require = "true") String username) {}
+            字段较多或需要校验参数时，直接用bean接收，postData(@Validated User user) {}
+        }
+        
+        类型为json时
+        {
+            postData(@RequestBody @Validated User user) {}
+            postData(@RequestBody Map<String,Object> reqMap) {}
+        }
+
+        json中含有数组参数：见EmployeeController.addEmployee
+       }
+    */
+
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     public List<Test> getData() {
         return testService.getData();
     }
-
-    /*
-       post请求获取参数：
-       1、类型为x-www-form-urlencoded时，请求参数字段作为形参，(Sring username)，可以用@RequestParam校验
-       2、类型为x-www-form-urlencoded时，直接用bean接收，(User user) user.getUserName()，可以使用@Validated
-       3、类型为json时，需要加@RequestBody，(@RequestBody User user)，可以使用@Validated
-       4、类型为json时，不定义实体类，(@RequestBody Map<String,Object> reqMap)，自己校验？
-       5、发送过来的数据中含有对象数组时，可以重新定义实体类，在实体类中添加list。
-       或者使用fastjson转换一下，先转换成jsonsrray，再转换成arraylist。
-    */
 }

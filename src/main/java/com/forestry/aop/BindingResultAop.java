@@ -8,7 +8,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 
-// 这个aop是用来配合bean中@NotBlank这类注解进行请求参数检验
+// 这个aop是用来配合bean中@NotBlank这类注解和controller中@Valid进行请求参数检验
 @Component
 @Aspect
 public class BindingResultAop {

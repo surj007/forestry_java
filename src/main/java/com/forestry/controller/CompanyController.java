@@ -14,7 +14,7 @@ import javax.validation.Valid;
 @RequestMapping("/company")
 public class CompanyController {
     @Autowired
-    CompanyService companyService;
+    private CompanyService companyService;
 
     @RequestMapping(value = "/getCompany", method = RequestMethod.GET)
     public CommonResDto getCompany() {
@@ -26,13 +26,13 @@ public class CompanyController {
     @PreAuthorize("hasRole('ROLE_admin')")
     @RequestMapping(value = "/editCompany", method = RequestMethod.POST)
     public CommonResDto editCompany(@RequestBody @Valid Company company, BindingResult bindingResult) {
-        if(company.getId() == 0) {
-            if(companyService.getCompanyByNameOrCode(company.getName(), company.getCode()) != null) {
+        if (company.getId() == 0) {
+            if (companyService.getCompanyByNameOrCode(company.getName(), company.getCode()) != null) {
                 return CommonResDto.error("企业名称或信用代码已存在，请重新提交");
             }
 
-            if(companyService.addCompany(company) == 1) {
-                if(companyService.relatedCompanyAndUser(company.getId()) == 1) {
+            if (companyService.addCompany(company) == 1) {
+                if (companyService.relatedCompanyAndUser(company.getId()) == 1) {
                     return CommonResDto.ok("addCompany success");
                 }
             }
@@ -40,7 +40,7 @@ public class CompanyController {
             return CommonResDto.error("提交企业信息失败，请重新提交");
         }
 
-        if(companyService.updateCompany(company) == 1) {
+        if (companyService.updateCompany(company) == 1) {
             return CommonResDto.ok("updateCompany success");
         }
 

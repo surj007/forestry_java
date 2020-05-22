@@ -20,7 +20,7 @@ import java.util.Map;
 @RequestMapping("/employee")
 public class EmployeeController {
     @Autowired
-    EmployeeService employeeService;
+    private EmployeeService employeeService;
 
     @RequestMapping(value = "/getEmployee", method = RequestMethod.GET)
     public CommonResDto getEmployee() {
@@ -52,18 +52,26 @@ public class EmployeeController {
     */
     public CommonResDto addEmployee(HttpServletResponse res, @RequestBody Map<String, Object> reqMap) {
         ArrayList<User> userList = CommonUtil.formatReqMapItem2ArrayList(reqMap.get("employee"), User.class);
-        for(User user : userList) {
-            if(user.getName() == null || user.getUsername() == null || user.getSocialSecurityPic() == null || user.getCardFrontPic() == null || user.getCardOppositePic() == null) {
+        
+        for (User user : userList) {
+            if (
+                user.getName() == null || 
+                user.getUsername() == null || 
+                user.getSocialSecurityPic() == null || 
+                user.getCardFrontPic() == null || 
+                user.getCardOppositePic() == null
+            ) {
                 res.setStatus(400);
                 return CommonResDto.error("缺少参数");
             }
         }
 
         int result = employeeService.addEmployeeList(userList);
+
         if (result == -1) {
             return CommonResDto.error("业务员手机号已存在，请重新提交");
         }
-        else if(result == -2) {
+        else if (result == -2) {
             return CommonResDto.error("添加业务员失败，请重新提交");
         }
         else {
@@ -75,18 +83,26 @@ public class EmployeeController {
     @RequestMapping(value = "/editEmployee", method = RequestMethod.POST)
     public CommonResDto editEmployee(HttpServletResponse res, @RequestBody Map<String, Object> reqMap) {
         ArrayList<User> userList = CommonUtil.formatReqMapItem2ArrayList(reqMap.get("employee"), User.class);
-        for(User user : userList) {
-            if(user.getName() == null || user.getUsername() == null || user.getSocialSecurityPic() == null || user.getCardFrontPic() == null || user.getCardOppositePic() == null) {
+        
+        for (User user : userList) {
+            if (
+                user.getName() == null || 
+                user.getUsername() == null || 
+                user.getSocialSecurityPic() == null || 
+                user.getCardFrontPic() == null || 
+                user.getCardOppositePic() == null
+            ) {
                 res.setStatus(400);
                 return CommonResDto.error("缺少参数");
             }
         }
 
         int result = employeeService.editEmployeeList(userList);
-        if(result == -1) {
+
+        if (result == -1) {
             return CommonResDto.error("业务员手机号已存在，请重新提交");
         }
-        else if(result == -2) {
+        else if (result == -2) {
             return CommonResDto.error("修改业务员失败，请重新提交");
         }
         else {

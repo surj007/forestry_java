@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CompanyService {
     @Autowired
-    CompanyDao companyDao;
+    private CompanyDao companyDao;
 
     public Company getCompanyByUserId() {
         return companyDao.getCompanyByUserId(UserUtil.getUserInfo().getId());

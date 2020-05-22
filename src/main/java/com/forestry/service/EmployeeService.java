@@ -12,14 +12,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+// 这没必要在整个类上使用事务，应该在具体的方法上使用
 @Transactional
 public class EmployeeService {
     @Autowired
-    EmployeeDao employeeDao;
+    private EmployeeDao employeeDao;
     @Autowired
-    AuthDao authDao;
+    private AuthDao authDao;
     @Autowired
-    AuthService authService;
+    private AuthService authService;
 
     public List<User> getEmployee() {
         return employeeDao.getEmployee(UserUtil.getUserInfo().getId());
@@ -37,18 +38,18 @@ public class EmployeeService {
     public int addEmployeeList(ArrayList<User> userList) {
         int employeeRoleId = 2;
 
-        for(User user : userList) {
-            if(authService.isReg(user.getUsername())) {
+        for (User user : userList) {
+            if (authService.isReg(user.getUsername())) {
                 return -1;
             }
 
-            if(this.addEmployee(user) != 1) {
+            if (this.addEmployee(user) != 1) {
                 return -2;
             }
-            if(this.relatedCompanyAndEmployee(user.getId()) != 1) {
+            if (this.relatedCompanyAndEmployee(user.getId()) != 1) {
                 return -2;
             }
-            if(authDao.addRole(user.getId(), employeeRoleId) != 1) {
+            if (authDao.addRole(user.getId(), employeeRoleId) != 1) {
                 return -2;
             }
         }
@@ -59,36 +60,36 @@ public class EmployeeService {
     public int editEmployeeList(ArrayList<User> userList) {
         int employeeRoleId = 2;
 
-        for(User user : userList) {
+        for (User user : userList) {
             User registeredUser = authDao.loadUserByUsername(user.getUsername());
-            if(registeredUser != null && registeredUser.getBoss() != UserUtil.getUserInfo().getId()) {
+            if (registeredUser != null && registeredUser.getBoss() != UserUtil.getUserInfo().getId()) {
                 return -1;
             }
         }
 
         List<User> registeredUserList = this.getEmployee();
-        for(User user : registeredUserList) {
-            if(user != null) {
-                if(employeeDao.delEmployee(user.getId()) != 1) {
+        for (User user : registeredUserList) {
+            if (user != null) {
+                if (employeeDao.delEmployee(user.getId()) != 1) {
                     return -2;
                 }
-                if(employeeDao.delRelateCompanyAndEmployee(user.getId()) != 1) {
+                if (employeeDao.delRelateCompanyAndEmployee(user.getId()) != 1) {
                     return -2;
                 }
-                if(authDao.delRole(user.getId()) != 1) {
+                if (authDao.delRole(user.getId()) != 1) {
                     return -2;
                 }
             }
         }
 
-        for(User user : userList) {
-            if(this.addEmployee(user) != 1) {
+        for (User user : userList) {
+            if (this.addEmployee(user) != 1) {
                 return -2;
             }
-            if(this.relatedCompanyAndEmployee(user.getId()) != 1) {
+            if (this.relatedCompanyAndEmployee(user.getId()) != 1) {
                 return -2;
             }
-            if(authDao.addRole(user.getId(), employeeRoleId) != 1) {
+            if (authDao.addRole(user.getId(), employeeRoleId) != 1) {
                 return -2;
             }
         }
