@@ -6,17 +6,17 @@ import com.forestry.bean.User;
 import java.util.List;
 
 public interface AuthDao {
-    User loadUserByUsername(String username);
+    public User loadUserByUsername(String username);
 
-    List<Role> getRolesByUserId(int id);
+    public List<Role> getRolesByUserId(int id);
 
-    int regUser(String username, String password);
+    public int regUser(String username, String password);
 
-    int updateCode(String username, String code);
+    public int updateCode(String username, String code);
 
-    int updateUser(String username, String password);
+    public int updateUser(String username, String password);
 
-    int addRole(int uid, int rid);
+    public int addRole(int uid, int rid);
 
-    int delRole(int uid);
+    public int delRole(int uid);
 }

@@ -26,31 +26,32 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-// 这块还需要看下bean中的user bean
 @Component
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    AuthService authService;
+    private AuthService authService;
     @Autowired
-    SecurityMetadataSource securityMetadataSource;
+    private SecurityMetadataSource securityMetadataSource;
     @Autowired
-    UrlAccessDecisionManager urlAccessDecisionManager;
+    private UrlAccessDecisionManager urlAccessDecisionManager;
     @Autowired
-    AuthAccessDeniedHandler authAccessDeniedHandler;
+    private AuthAccessDeniedHandler authAccessDeniedHandler;
     @Autowired
-    UnAuthHandler unAuthHandler;
+    private UnAuthHandler unAuthHandler;
     @Autowired
-    CustomLogoutSuccessHandler customLogoutSuccessHandler;
+    private CustomLogoutSuccessHandler customLogoutSuccessHandler;
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(authService).passwordEncoder(new BCryptPasswordEncoder());
+    protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+        // 使用authService（需要实现UserDetailsService接口）中的loadUserByUsername方法，找到数据库中user信息与请求中的password对比
+        // 返回的user对象实现了UserDetails接口
+        authenticationManagerBuilder.userDetailsService(authService).passwordEncoder(new BCryptPasswordEncoder());
     }
 
     @Override
-    public void configure(WebSecurity web) {
-        web.ignoring().antMatchers(
+    public void configure(WebSecurity webSecurity) {
+        webSecurity.ignoring().antMatchers(
             "/index.html",
             "/static/**",
             "/auth/getCode4RegAndResetPwd",
@@ -61,13 +62,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity
         .authorizeRequests()
+            // 权限判断
             .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
                 @Override
                 public <O extends FilterSecurityInterceptor> O postProcess(O o) {
+                    // 获取当前路径所需角色
                     o.setSecurityMetadataSource(securityMetadataSource);
+                    // 判断能否访问当前路径
                     o.setAccessDecisionManager(urlAccessDecisionManager);
                     return o;
                 }
@@ -77,9 +81,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/auth/login")
                 .successHandler(new AuthenticationSuccessHandler() {
                     @Override
-                    public void onAuthenticationSuccess(HttpServletRequest req,
-                                                        HttpServletResponse res,
-                                                        Authentication auth) throws IOException {
+                    public void onAuthenticationSuccess(
+                        HttpServletRequest req,
+                        HttpServletResponse res,
+                        Authentication auth
+                    ) throws IOException {
                         res.setContentType("application/json;charset=utf-8");
                         CommonResDto commonResDto = CommonResDto.ok("login success", UserUtil.getUserInfo());
                         ObjectMapper om = new ObjectMapper();
@@ -91,12 +97,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 })
                 .failureHandler(new AuthenticationFailureHandler() {
                     @Override
-                    public void onAuthenticationFailure(HttpServletRequest req,
-                                                        HttpServletResponse res,
-                                                        AuthenticationException e) throws IOException {
+                    public void onAuthenticationFailure(
+                        HttpServletRequest req,
+                        HttpServletResponse res,
+                        AuthenticationException e
+                    ) throws IOException {
                         res.setContentType("application/json;charset=utf-8");
                         CommonResDto commonResDto = null;
-                        if(e instanceof BadCredentialsException || e instanceof UsernameNotFoundException) {
+                        if (e instanceof BadCredentialsException || e instanceof UsernameNotFoundException) {
                             commonResDto = CommonResDto.error("手机号或密码错误");
                         }
                         else {
@@ -114,15 +122,69 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .logout()
                 .permitAll()
                 .logoutUrl("/auth/logout")
-                .logoutSuccessHandler(customLogoutSuccessHandler) // logout后不再重定向，返回json
+                // logout后不再重定向，返回json
+                .logoutSuccessHandler(customLogoutSuccessHandler)
         .and()
             .csrf().disable()
         .exceptionHandling()
+            // 未登录handler
             .authenticationEntryPoint(unAuthHandler)
+            // 没全权限handler
             .accessDeniedHandler(authAccessDeniedHandler)
         .and()
             .sessionManagement()
+                // 最多几个用户登录
                 .maximumSessions(1)
+                // 当达到最大值时，是否保留已经登录的用户
                 .maxSessionsPreventsLogin(false);
+
+        // httpSecurity.addFilterAt(customAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
+
+    // 配置login可以使用json类型（也能使用x-www类型）
+    // @Bean
+    // CustomAuthenticationFilter customAuthenticationFilter() throws Exception {
+    //     CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter();
+    //     customAuthenticationFilter.setAuthenticationSuccessHandler(new AuthenticationSuccessHandler() {
+    //         @Override
+    //         public void onAuthenticationSuccess(
+    //             HttpServletRequest req,
+    //             HttpServletResponse res,
+    //             Authentication auth
+    //         ) throws IOException {
+    //             res.setContentType("application/json;charset=utf-8");
+    //             CommonResDto commonResDto = CommonResDto.ok("login success", UserUtil.getUserInfo());
+    //             ObjectMapper om = new ObjectMapper();
+    //             PrintWriter out = res.getWriter();
+    //             out.write(om.writeValueAsString(commonResDto));
+    //             out.flush();
+    //             out.close();
+    //         }
+    //     });
+    //     customAuthenticationFilter.setAuthenticationFailureHandler(new AuthenticationFailureHandler() {
+    //         @Override
+    //         public void onAuthenticationFailure(
+    //             HttpServletRequest req,
+    //             HttpServletResponse res,
+    //             AuthenticationException e
+    //         ) throws IOException {
+    //             res.setContentType("application/json;charset=utf-8");
+    //             CommonResDto commonResDto = null;
+    //             if (e instanceof BadCredentialsException || e instanceof UsernameNotFoundException) {
+    //                 commonResDto = CommonResDto.error("手机号或密码错误");
+    //             }
+    //             else {
+    //                 commonResDto = CommonResDto.error("login failed", e);
+    //             }
+    //             ObjectMapper om = new ObjectMapper();
+    //             PrintWriter out = res.getWriter();
+    //             out.write(om.writeValueAsString(commonResDto));
+    //             out.flush();
+    //             out.close();
+    //         }
+    //     });
+    //     customAuthenticationFilter.setFilterProcessesUrl("/auth/login");
+    //     customAuthenticationFilter.setAuthenticationManager(authenticationManagerBean());
+    //     return customAuthenticationFilter;
+    // }
 }

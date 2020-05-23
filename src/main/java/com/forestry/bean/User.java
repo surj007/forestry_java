@@ -10,7 +10,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-// spring security有关联
 public class User implements UserDetails {
     private int id;
     private String username; // phone

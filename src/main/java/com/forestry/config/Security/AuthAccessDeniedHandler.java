@@ -14,9 +14,11 @@ import java.io.PrintWriter;
 @Component
 public class AuthAccessDeniedHandler implements AccessDeniedHandler {
     @Override
-    public void handle(HttpServletRequest req,
-                       HttpServletResponse res,
-                       AccessDeniedException e) throws IOException {
+    public void handle(
+        HttpServletRequest req,
+        HttpServletResponse res,
+        AccessDeniedException e
+    ) throws IOException {
         res.setStatus(403);
         res.setContentType("application/json;charset=UTF-8");
         PrintWriter out = res.getWriter();

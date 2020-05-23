@@ -15,9 +15,11 @@ import java.io.PrintWriter;
 @Component
 public class UnAuthHandler implements AuthenticationEntryPoint {
     @Override
-    public void commence(HttpServletRequest req,
-                         HttpServletResponse res,
-                         AuthenticationException e) throws IOException, ServletException {
+    public void commence(
+        HttpServletRequest req,
+        HttpServletResponse res,
+        AuthenticationException e
+    ) throws IOException, ServletException {
         res.setContentType("application/json;charset=UTF-8");
         PrintWriter out = res.getWriter();
         CommonResDto commonResDto = CommonResDto.error("请重新登陆");

@@ -13,29 +13,33 @@ import java.util.Iterator;
 @Component
 public class UrlAccessDecisionManager implements AccessDecisionManager {
     @Override
-    public void decide(Authentication auth, Object o, Collection<ConfigAttribute> cas){
-        Iterator<ConfigAttribute> iterator = cas.iterator();
+    public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes){
+        Iterator<ConfigAttribute> iterator = configAttributes.iterator();
         while (iterator.hasNext()) {
-            ConfigAttribute ca = iterator.next();
-            String needRole = ca.getAttribute();
+            ConfigAttribute configAttribute = iterator.next();
+            String needRole = configAttribute.getAttribute();
 
-            Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+            // authentication.getAuthorities是在User bean中重写的
+            Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
             for (GrantedAuthority authority : authorities) {
                 if (authority.getAuthority().equals(needRole)) {
                     return;
                 }
             }
         }
+
         throw new AccessDeniedException("当前角色不能访问此资源");
     }
 
+    // 当前AccessDecisionManager是否支持此configAttribute，也就是上面的Collection<ConfigAttribute> configAttributes中是否会包含此configAttribute
     @Override
     public boolean supports(ConfigAttribute configAttribute) {
         return true;
     }
 
+    // 当前AccessDecisionManager是否支持此clazz，也就是上面的Object object是否会传入clazz类型的对象
     @Override
-    public boolean supports(Class<?> aClass) {
+    public boolean supports(Class<?> clazz) {
         return true;
     }
 }

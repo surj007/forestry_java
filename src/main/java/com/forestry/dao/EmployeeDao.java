@@ -5,15 +5,15 @@ import com.forestry.bean.User;
 import java.util.List;
 
 public interface EmployeeDao {
-    List<User> getEmployee(int userId);
+    public List<User> getEmployee(int userId);
 
-    int addEmployee(User user);
+    public int addEmployee(User user);
 
-    int relatedCompanyAndEmployee(int uid, int userId);
+    public int relatedCompanyAndEmployee(int uid, int userId);
 
-    int delEmployee(int id);
+    public int delEmployee(int id);
 
-    int delRelateCompanyAndEmployee(int uid);
+    public int delRelateCompanyAndEmployee(int uid);
 
-    int changeCompanyStatus(int uid);
+    public int changeCompanyStatus(int uid);
 }

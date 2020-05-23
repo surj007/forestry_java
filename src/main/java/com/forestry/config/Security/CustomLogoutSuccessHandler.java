@@ -15,9 +15,11 @@ import java.io.PrintWriter;
 @Component
 public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
     @Override
-    public void onLogoutSuccess(HttpServletRequest req,
-                                HttpServletResponse res,
-                                Authentication e) throws IOException, ServletException {
+    public void onLogoutSuccess(
+        HttpServletRequest req,
+        HttpServletResponse res,
+        Authentication e
+    ) throws IOException, ServletException {
         res.setContentType("application/json;charset=UTF-8");
         PrintWriter out = res.getWriter();
         CommonResDto commonResDto = CommonResDto.ok("logout success");
