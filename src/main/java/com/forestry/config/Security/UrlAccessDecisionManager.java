@@ -37,9 +37,9 @@ public class UrlAccessDecisionManager implements AccessDecisionManager {
         return true;
     }
 
-    // 当前AccessDecisionManager是否支持此clazz，也就是上面的Object object是否会传入clazz类型的对象
+    // 当前AccessDecisionManager是否支持此aClass，也就是上面的Object object是否会传入aClass类型的对象
     @Override
-    public boolean supports(Class<?> clazz) {
+    public boolean supports(Class<?> aClass) {
         return true;
     }
 }

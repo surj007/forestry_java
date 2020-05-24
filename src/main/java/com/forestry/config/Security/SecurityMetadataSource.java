@@ -25,10 +25,10 @@ public class SecurityMetadataSource implements FilterInvocationSecurityMetadataS
         return null;
     }
 
-    // 当前FilterInvocationSecurityMetadataSource是否支持此clazz，也就是上面的Object object是否会传入clazz类型的对象
+    // 当前FilterInvocationSecurityMetadataSource是否支持此aClass，也就是上面的Object object是否会传入aClass类型的对象
     // 这样写表示上面的Object object只能是FilterInvocation类型的
     @Override
-    public boolean supports(Class<?> clazz) {
-        return FilterInvocation.class.isAssignableFrom(clazz);
+    public boolean supports(Class<?> aClass) {
+        return FilterInvocation.class.isAssignableFrom(aClass);
     }
 }

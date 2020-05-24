@@ -138,7 +138,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 当达到最大值时，是否保留已经登录的用户
                 .maxSessionsPreventsLogin(false);
 
+        // 配置login可以使用json类型
         // httpSecurity.addFilterAt(customAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+
+        // 配置login接口传递多个参数：username、password、loginType
+        // MyAuthenticationProvider myAuthenticationProvider = new MyAuthenticationProvider();
+        // httpSecurity.authenticationProvider(myAuthenticationProvider)
+        //     .addFilterAfter(myAuthenticationProcessingFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     // 配置login可以使用json类型（也能使用x-www类型）
@@ -184,7 +190,55 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     //         }
     //     });
     //     customAuthenticationFilter.setFilterProcessesUrl("/auth/login");
+    //     // authenticationManagerBean是父类中的方法
     //     customAuthenticationFilter.setAuthenticationManager(authenticationManagerBean());
     //     return customAuthenticationFilter;
+    // }
+
+    // 配置login接口传递多个参数：username、password、loginType（验证码、密码）
+    // @Bean
+    // MyAuthenticationProcessingFilter myAuthenticationProcessingFilter() throws Exception {
+    //     MyAuthenticationProcessingFilter myAuthenticationProcessingFilter = new MyAuthenticationProcessingFilter();
+    //     myAuthenticationProcessingFilter.setAuthenticationSuccessHandler(new AuthenticationSuccessHandler() {
+    //         @Override
+    //         public void onAuthenticationSuccess(
+    //             HttpServletRequest req,
+    //             HttpServletResponse res,
+    //             Authentication auth
+    //         ) throws IOException {
+    //             res.setContentType("application/json;charset=utf-8");
+    //             CommonResDto commonResDto = CommonResDto.ok("login success", UserUtil.getUserInfo());
+    //             ObjectMapper om = new ObjectMapper();
+    //             PrintWriter out = res.getWriter();
+    //             out.write(om.writeValueAsString(commonResDto));
+    //             out.flush();
+    //             out.close();
+    //         }
+    //     });
+    //     myAuthenticationProcessingFilter.setAuthenticationFailureHandler(new AuthenticationFailureHandler() {
+    //         @Override
+    //         public void onAuthenticationFailure(
+    //             HttpServletRequest req,
+    //             HttpServletResponse res,
+    //             AuthenticationException e
+    //         ) throws IOException {
+    //             res.setContentType("application/json;charset=utf-8");
+    //             CommonResDto commonResDto = null;
+    //             if (e instanceof BadCredentialsException || e instanceof UsernameNotFoundException) {
+    //                 commonResDto = CommonResDto.error("手机号或密码错误");
+    //             }
+    //             else {
+    //                 commonResDto = CommonResDto.error("login failed", e);
+    //             }
+    //             ObjectMapper om = new ObjectMapper();
+    //             PrintWriter out = res.getWriter();
+    //             out.write(om.writeValueAsString(commonResDto));
+    //             out.flush();
+    //             out.close();
+    //         }
+    //     });
+    //     myAuthenticationProcessingFilter.setFilterProcessesUrl("/auth/login");
+    //     myAuthenticationProcessingFilter.setAuthenticationManager(authenticationManagerBean());
+    //     return myAuthenticationProcessingFilter;
     // }
 }
