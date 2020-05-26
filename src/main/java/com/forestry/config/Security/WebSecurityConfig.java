@@ -64,10 +64,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-        .authorizeRequests()
+            .authorizeRequests()
             // 权限判断
             .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
                 @Override
+                // 泛型方法的写法
                 public <O extends FilterSecurityInterceptor> O postProcess(O o) {
                     // 获取当前路径所需角色
                     o.setSecurityMetadataSource(securityMetadataSource);
@@ -76,67 +77,67 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     return o;
                 }
             })
-        .and()
-            .formLogin()
-                .loginProcessingUrl("/auth/login")
-                .successHandler(new AuthenticationSuccessHandler() {
-                    @Override
-                    public void onAuthenticationSuccess(
-                        HttpServletRequest req,
-                        HttpServletResponse res,
-                        Authentication auth
-                    ) throws IOException {
-                        res.setContentType("application/json;charset=utf-8");
-                        CommonResDto commonResDto = CommonResDto.ok("login success", UserUtil.getUserInfo());
-                        ObjectMapper om = new ObjectMapper();
-                        PrintWriter out = res.getWriter();
-                        out.write(om.writeValueAsString(commonResDto));
-                        out.flush();
-                        out.close();
-                    }
-                })
-                .failureHandler(new AuthenticationFailureHandler() {
-                    @Override
-                    public void onAuthenticationFailure(
-                        HttpServletRequest req,
-                        HttpServletResponse res,
-                        AuthenticationException e
-                    ) throws IOException {
-                        res.setContentType("application/json;charset=utf-8");
-                        CommonResDto commonResDto = null;
-                        if (e instanceof BadCredentialsException || e instanceof UsernameNotFoundException) {
-                            commonResDto = CommonResDto.error("手机号或密码错误");
+            .and()
+                .formLogin()
+                    .loginProcessingUrl("/auth/login")
+                    .successHandler(new AuthenticationSuccessHandler() {
+                        @Override
+                        public void onAuthenticationSuccess(
+                            HttpServletRequest req,
+                            HttpServletResponse res,
+                            Authentication auth
+                        ) throws IOException {
+                            res.setContentType("application/json;charset=utf-8");
+                            CommonResDto commonResDto = CommonResDto.ok("login success", UserUtil.getUserInfo());
+                            ObjectMapper om = new ObjectMapper();
+                            PrintWriter out = res.getWriter();
+                            out.write(om.writeValueAsString(commonResDto));
+                            out.flush();
+                            out.close();
                         }
-                        else {
-                            commonResDto = CommonResDto.error("login failed", e);
+                    })
+                    .failureHandler(new AuthenticationFailureHandler() {
+                        @Override
+                        public void onAuthenticationFailure(
+                            HttpServletRequest req,
+                            HttpServletResponse res,
+                            AuthenticationException e
+                        ) throws IOException {
+                            res.setContentType("application/json;charset=utf-8");
+                            CommonResDto commonResDto = null;
+                            if (e instanceof BadCredentialsException || e instanceof UsernameNotFoundException) {
+                                commonResDto = CommonResDto.error("手机号或密码错误");
+                            }
+                            else {
+                                commonResDto = CommonResDto.error("login failed", e);
+                            }
+                            ObjectMapper om = new ObjectMapper();
+                            PrintWriter out = res.getWriter();
+                            out.write(om.writeValueAsString(commonResDto));
+                            out.flush();
+                            out.close();
                         }
-                        ObjectMapper om = new ObjectMapper();
-                        PrintWriter out = res.getWriter();
-                        out.write(om.writeValueAsString(commonResDto));
-                        out.flush();
-                        out.close();
-                    }
-                })
-                .permitAll()
-        .and()
-            .logout()
-                .permitAll()
-                .logoutUrl("/auth/logout")
-                // logout后不再重定向，返回json
-                .logoutSuccessHandler(customLogoutSuccessHandler)
-        .and()
-            .csrf().disable()
-        .exceptionHandling()
-            // 未登录handler
-            .authenticationEntryPoint(unAuthHandler)
-            // 没全权限handler
-            .accessDeniedHandler(authAccessDeniedHandler)
-        .and()
-            .sessionManagement()
-                // 最多几个用户登录
-                .maximumSessions(1)
-                // 当达到最大值时，是否保留已经登录的用户
-                .maxSessionsPreventsLogin(false);
+                    })
+                    .permitAll()
+            .and()
+                .logout()
+                    .permitAll()
+                    .logoutUrl("/auth/logout")
+                    // logout后不再重定向，返回json
+                    .logoutSuccessHandler(customLogoutSuccessHandler)
+            .and()
+                .csrf().disable()
+            .exceptionHandling()
+                // 未登录handler
+                .authenticationEntryPoint(unAuthHandler)
+                // 没全权限handler
+                .accessDeniedHandler(authAccessDeniedHandler)
+            .and()
+                .sessionManagement()
+                    // 最多几个用户登录
+                    .maximumSessions(1)
+                    // 当达到最大值时，是否保留已经登录的用户
+                    .maxSessionsPreventsLogin(false);
 
         // 配置login可以使用json类型
         // httpSecurity.addFilterAt(customAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

@@ -12,14 +12,23 @@ import java.util.Iterator;
 
 @Component
 public class UrlAccessDecisionManager implements AccessDecisionManager {
+    // arg1：当前用户所具有的权限
+    // arg2：req
+    // arg3：当前路径所需要权限
+    // return null则可以进入，throw error不能进入
     @Override
-    public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes){
+    public void decide(
+        Authentication authentication, 
+        Object object, 
+        Collection<ConfigAttribute> configAttributes
+    ) {
         Iterator<ConfigAttribute> iterator = configAttributes.iterator();
         while (iterator.hasNext()) {
             ConfigAttribute configAttribute = iterator.next();
+            // 当前请求需要的权限
             String needRole = configAttribute.getAttribute();
 
-            // authentication.getAuthorities是在User bean中重写的
+            // authentication.getAuthorities是在User bean中重写的，authorities是当前用户所具有的权限
             Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
             for (GrantedAuthority authority : authorities) {
                 if (authority.getAuthority().equals(needRole)) {
