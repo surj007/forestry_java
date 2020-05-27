@@ -2,19 +2,18 @@
 package com.forestry.config.Security.MultiParam;
  
 import com.alibaba.fastjson.JSONObject;
-import com.zhengqing.utils.MultiReadHttpServletRequest;
-import com.zhengqing.modules.system.entity.User;
-
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.stereotype.Component;
- 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.zhengqing.utils.MultiReadHttpServletRequest;
+import com.zhengqing.modules.system.entity.User;
 
 // 自定义请求传递参数
 @Component

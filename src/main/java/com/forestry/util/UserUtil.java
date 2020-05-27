@@ -1,7 +1,8 @@
 package com.forestry.util;
 
-import com.forestry.bean.User;
 import org.springframework.security.core.context.SecurityContextHolder;
+
+import com.forestry.bean.User;
 
 public class UserUtil {
     // 获取session中的user信息

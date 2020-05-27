@@ -1,8 +1,9 @@
 // 这个文件是自己写的
 package com.forestry.rpc.impl;
 
-import com.forestry.rpc.TestRpcService;
 import org.apache.thrift.TException;
+
+import com.forestry.rpc.TestRpcService;
 
 public class TestRpcServiceImpl implements TestRpcService.Iface {
     @Override

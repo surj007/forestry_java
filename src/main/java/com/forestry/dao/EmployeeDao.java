@@ -1,8 +1,8 @@
 package com.forestry.dao;
 
-import com.forestry.bean.User;
-
 import java.util.List;
+
+import com.forestry.bean.User;
 
 public interface EmployeeDao {
     public List<User> getEmployee(int userId);

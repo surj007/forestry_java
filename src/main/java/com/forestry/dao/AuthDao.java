@@ -1,9 +1,9 @@
 package com.forestry.dao;
 
+import java.util.List;
+
 import com.forestry.bean.Role;
 import com.forestry.bean.User;
-
-import java.util.List;
 
 public interface AuthDao {
     public User loadUserByUsername(String username);

@@ -1,8 +1,5 @@
 package com.forestry;
 
-import com.forestry.rpc.TestRpcService;
-import com.forestry.rpc.impl.TestRpcServiceImpl;
-import com.forestry.util.CommonUtil;
 import org.apache.thrift.TProcessor;
 import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.server.TServer;
@@ -12,6 +9,10 @@ import org.apache.thrift.transport.TTransportException;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import com.forestry.rpc.TestRpcService;
+import com.forestry.rpc.impl.TestRpcServiceImpl;
+import com.forestry.util.CommonUtil;
 
 @SpringBootApplication
 @MapperScan("com.forestry.dao")

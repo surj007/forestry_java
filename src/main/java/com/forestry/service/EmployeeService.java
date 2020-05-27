@@ -1,15 +1,15 @@
 package com.forestry.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.forestry.bean.User;
 import com.forestry.dao.AuthDao;
 import com.forestry.dao.EmployeeDao;
 import com.forestry.util.UserUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 // 这没必要在整个类上使用事务，应该在具体的方法上使用

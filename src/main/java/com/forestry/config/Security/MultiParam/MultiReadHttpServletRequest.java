@@ -1,7 +1,6 @@
 package com.zhengqing.modules.common.utils;
 
 import com.alibaba.fastjson.JSONObject;
-
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 import javax.servlet.ServletRequest;

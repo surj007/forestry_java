@@ -1,9 +1,6 @@
 package com.forestry.config.Security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.forestry.dto.CommonResDto;
-import com.forestry.service.AuthService;
-import com.forestry.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.*;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
@@ -20,11 +17,14 @@ import org.springframework.security.web.access.intercept.FilterSecurityIntercept
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+
+import com.forestry.util.UserUtil;
+import com.forestry.dto.CommonResDto;
+import com.forestry.service.AuthService;
 
 @Component
 @EnableGlobalMethodSecurity(prePostEnabled = true)

@@ -1,7 +1,5 @@
 package com.forestry.config.Security.MultiParam;
 
-import com.zhengqing.config.security.filter.MyAuthenticationToken;
-
 import org.apache.commons.collections.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -10,10 +8,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
- 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.zhengqing.config.security.filter.MyAuthenticationToken;
 
 // 自定义用户名、密码校验
 @Component

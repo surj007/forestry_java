@@ -1,10 +1,11 @@
 package com.forestry.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.forestry.bean.Company;
 import com.forestry.dao.CompanyDao;
 import com.forestry.util.UserUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class CompanyService {

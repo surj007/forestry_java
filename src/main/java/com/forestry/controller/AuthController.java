@@ -1,15 +1,15 @@
 package com.forestry.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
+
 import com.forestry.dto.CommonResDto;
 import com.forestry.service.AuthService;
 import com.forestry.service.SmsService;
 import com.forestry.util.CommonUtil;
 import com.forestry.util.RedisUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
 
 // 下面的分层方式不对，不应该在controller中分散调用几个service，正常controller中应该只包含参数校验，以及根据service返回值，返回给前端不同的信息，其他业务处理都放在service中
 @RestController
