@@ -1,5 +1,6 @@
 package com.forestry.bean;
 
+// javax.validation只提供接口，具体的实现类是hibernate-validator提供的，hibernate-validator在springboot中默认引入
 import javax.validation.constraints.NotBlank;
 
 public class BoardCert {
