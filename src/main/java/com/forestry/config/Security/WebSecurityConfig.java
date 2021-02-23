@@ -130,7 +130,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .exceptionHandling()
                 // 未登录handler
                 .authenticationEntryPoint(unAuthHandler)
-                // 没全权限handler
+                // 没权限handler
                 .accessDeniedHandler(authAccessDeniedHandler)
             .and()
                 .sessionManagement()
